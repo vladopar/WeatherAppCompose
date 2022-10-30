@@ -14,7 +14,8 @@ data class HourlyWeatherDataDto(
     @Json(name = "weathercode") val weatherCodes: List<Int>,
     @Json(name = "windspeed_10m") val windSpeeds: List<Double>,
     @Json(name = "winddirection_10m") val windDirections: List<Int>,
-    @Json(name = "relativehumidity_2m") val humidities: List<Int>
+    @Json(name = "relativehumidity_2m") val humidities: List<Int>,
+    @Json(name = "pressure_msl") val pressures: List<Double>
 )
 
 data class DailyWeatherDataDto(

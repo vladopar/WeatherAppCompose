@@ -33,13 +33,14 @@ fun WeatherDto.toWeatherInfo(): WeatherInfo {
 
     return WeatherInfo(
         currentWeatherData = WeatherData(
-            time = now,
-            weatherType = tempCurrentWeatherData!!.weatherType,
+            time = tempCurrentWeatherData!!.time,
+            weatherType = tempCurrentWeatherData.weatherType,
             temperature = tempCurrentWeatherData.temperature,
             precipitation = tempCurrentWeatherData.precipitation,
             windSpeed = tempCurrentWeatherData.windSpeed,
             windDirection = tempCurrentWeatherData.windDirection,
             humidity = tempCurrentWeatherData.humidity,
+            pressure = tempCurrentWeatherData.pressure,
             sunrise = dailyWeatherDataList[0].sunrise.substringAfter("T"),
             sunset = dailyWeatherDataList[0].sunset.substringAfter("T")
         ),
@@ -56,6 +57,7 @@ fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> 
         val windSpeed = windSpeeds[index]
         val windDirection = WindDirectionMapper.map(windDirections[index])
         val humidity = humidities[index]
+        val pressure = pressures[index]
         IndexedWeatherData(
             index = index,
             data = WeatherData(
@@ -65,7 +67,8 @@ fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> 
                 precipitation = precipitation,
                 windSpeed = windSpeed,
                 windDirection = windDirection,
-                humidity = humidity
+                humidity = humidity,
+                pressure = pressure
             )
         )
     }.groupBy {

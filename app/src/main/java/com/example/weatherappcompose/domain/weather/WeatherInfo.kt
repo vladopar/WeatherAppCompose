@@ -19,7 +19,8 @@ data class WeatherData(
     val windSpeed: Double,
     val windDirection: String,
     val humidity: Int = 0,
+    val pressure: Double = 0.0,
     val dayOfWeek: DayOfWeek? = time.dayOfWeek,
-    var sunrise: String = "",
+    val sunrise: String = "",
     val sunset: String = ""
 )
