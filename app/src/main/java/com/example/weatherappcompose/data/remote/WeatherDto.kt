@@ -9,9 +9,9 @@ data class WeatherDto(
 )
 
 data class HourlyWeatherDataDto(
-    val times: List<String>,
+    @Json(name = "time") val times: List<String>,
     @Json(name = "temperature_2m") val temperatures: List<Double>,
-    val precipitations: List<Double>,
+    @Json(name = "precipitation") val precipitations: List<Double>,
     @Json(name = "weathercode") val weatherCodes: List<Int>,
     @Json(name = "windspeed_10m") val windSpeeds: List<Double>,
     @Json(name = "winddirection_10m") val windDirections: List<Int>

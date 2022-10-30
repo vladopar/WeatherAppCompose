@@ -5,6 +5,7 @@ import com.example.weatherappcompose.data.remote.DailyWeatherDataDto
 import com.example.weatherappcompose.data.remote.HourlyWeatherDataDto
 import com.example.weatherappcompose.data.remote.WeatherDto
 import com.example.weatherappcompose.domain.weather.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -34,7 +35,7 @@ fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> 
         IndexedWeatherData(
             index = index,
             data = WeatherData(
-                date = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
+                time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
                 weatherType = weatherType,
                 temperatureMax = temperatureMax,
                 precipitation = precipitation,
@@ -74,7 +75,7 @@ fun DailyWeatherDataDto.toDailyWeatherDataList(): List<WeatherData> {
         val windSpeed = windSpeeds[index]
         val windDirection = WindDirectionMapper.map(windDirections[index])
         WeatherData(
-            date = LocalDateTime.parse(date),
+            date = LocalDate.parse(date),
             weatherType = weatherType,
             temperatureMax = temperatureMax,
             temperatureMin = temperatureMin,

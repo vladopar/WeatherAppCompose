@@ -3,27 +3,41 @@ package com.example.weatherappcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.weatherappcompose.ui.theme.WeatherAppComposeTheme
+import com.example.weatherappcompose.presentation.WeatherViewModel
+import com.example.weatherappcompose.presentation.ui.theme.WeatherAppComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: WeatherViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.loadWeatherInfo()
         setContent {
             WeatherAppComposeTheme {
-
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.LightGray),
+                ) {
+                    viewModel.state.weatherInfo?.currentWeatherData?.weatherType?.let {
+                        Text(text = it.weatherDesc)
+                        Image(painter = painterResource(id = it.iconRes), contentDescription = it.weatherDesc )
+                    }
+                }
             }
         }
     }
@@ -33,18 +47,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Preview() {
     WeatherAppComposeTheme() {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .background(color = MaterialTheme.colors.surface)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_sunny),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(Color.LightGray),
-                modifier = Modifier
-                    .fillMaxSize()
-            )
-        }
+
     }
 }
