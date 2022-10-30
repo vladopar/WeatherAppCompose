@@ -16,7 +16,7 @@ class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository
 ) : ViewModel() {
 
-    private val lat = 48.88
+    private val lat = 48.90
     private val long = 18.06
 
     var state by mutableStateOf(WeatherState())
