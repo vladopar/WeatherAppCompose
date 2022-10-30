@@ -3,7 +3,6 @@ package com.example.weatherappcompose.data.remote
 import com.squareup.moshi.Json
 
 data class WeatherDto(
-    @Json(name = "current_weather") val currentWeather: CurrentWeatherDataDto,
     val daily: DailyWeatherDataDto,
     val hourly: HourlyWeatherDataDto
 )
@@ -28,12 +27,4 @@ data class DailyWeatherDataDto(
     @Json(name = "winddirection_10m_dominant") val windDirections: List<Int>,
     @Json(name = "sunrise") val sunrises: List<String>,
     @Json(name = "sunset") val sunsets: List<String>
-)
-
-data class CurrentWeatherDataDto(
-    val temperature: Double,
-    @Json(name = "windspeed") val windSpeed: Double,
-    @Json(name = "winddirection") val windDirection: Int,
-    @Json(name = "weathercode") val weatherCode: Int,
-    val time: String
 )
