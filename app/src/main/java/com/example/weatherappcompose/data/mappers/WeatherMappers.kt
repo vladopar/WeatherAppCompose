@@ -1,10 +1,12 @@
 package com.example.weatherappcompose.data.mappers
 
-import com.example.weatherappcompose.data.remote.CurrentWeatherDataDto
 import com.example.weatherappcompose.data.remote.DailyWeatherDataDto
 import com.example.weatherappcompose.data.remote.HourlyWeatherDataDto
 import com.example.weatherappcompose.data.remote.WeatherDto
-import com.example.weatherappcompose.domain.weather.*
+import com.example.weatherappcompose.domain.weather.WeatherData
+import com.example.weatherappcompose.domain.weather.WeatherInfo
+import com.example.weatherappcompose.domain.weather.WeatherType
+import com.example.weatherappcompose.domain.weather.WindDirectionMapper
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -15,14 +17,24 @@ private data class IndexedWeatherData(
 )
 
 fun WeatherDto.toWeatherInfo(): WeatherInfo {
+    val hourlyWeatherDataMap = hourly.toHourlyWeatherDataList()
+    val dailyWeatherDataList = daily.toDailyWeatherDataList()
+    val now = LocalDateTime.now()
+    val currentWeatherData = hourlyWeatherDataMap[0]?.find {
+        val hour = if (now.minute < 30 || now.hour == 23) {
+            now.hour
+        } else {
+            now.hour + 1
+        }
+        it.time.hour == hour
+    }
+
     return WeatherInfo(
-        currentWeatherData = currentWeather.toCurrentWeatherData(
-            daily.sunrise.first(),
-            daily.sunset.first()
-        ),
-        dailyWeatherData = daily.toDailyWeatherDataList(),
-        hourlyWeatherData = hourly.toHourlyWeatherDataList()
+        currentWeatherData = currentWeatherData,
+        dailyWeatherData = dailyWeatherDataList,
+        hourlyWeatherData = hourlyWeatherDataMap
     )
+
 }
 
 fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> {
@@ -32,6 +44,7 @@ fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> 
         val precipitation = precipitations[index]
         val windSpeed = windSpeeds[index]
         val windDirection = WindDirectionMapper.map(windDirections[index])
+        val humidity = humidities[index]
         IndexedWeatherData(
             index = index,
             data = WeatherData(
@@ -40,30 +53,16 @@ fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> 
                 temperature = temperature,
                 precipitation = precipitation,
                 windSpeed = windSpeed,
-                windDirection = windDirection
+                windDirection = windDirection,
+                humidity = humidity
             )
         )
-    }.groupBy { 
+    }.groupBy {
         it.index / 24
     }.mapValues { it ->
         it.value.map { it.data }
     }
 
-}
-
-fun CurrentWeatherDataDto.toCurrentWeatherData(
-    sunrise: String,
-    sunset: String
-): CurrentWeatherData {
-    return CurrentWeatherData(
-        time = LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-        weatherType = WeatherType.fromWMO(weatherCode),
-        temperature = temperature,
-        windSpeed = windSpeed,
-        windDirection = WindDirectionMapper.map(windDirection),
-        sunrise = sunrise.substringAfter("T"),
-        sunset = sunset.substringAfter("T")
-    )
 }
 
 fun DailyWeatherDataDto.toDailyWeatherDataList(): List<WeatherData> {
@@ -74,6 +73,8 @@ fun DailyWeatherDataDto.toDailyWeatherDataList(): List<WeatherData> {
         val precipitation = precipitations[index]
         val windSpeed = windSpeeds[index]
         val windDirection = WindDirectionMapper.map(windDirections[index])
+        val sunrise = sunrises[index]
+        val sunset = sunsets[index]
         WeatherData(
             time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay(),
             weatherType = weatherType,
@@ -82,6 +83,8 @@ fun DailyWeatherDataDto.toDailyWeatherDataList(): List<WeatherData> {
             precipitation = precipitation,
             windSpeed = windSpeed,
             windDirection = windDirection,
+            sunrise = sunrise,
+            sunset = sunset
         )
     }
 }

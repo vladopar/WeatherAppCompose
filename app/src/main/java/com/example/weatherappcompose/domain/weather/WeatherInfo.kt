@@ -4,19 +4,9 @@ import java.time.DayOfWeek
 import java.time.LocalDateTime
 
 data class WeatherInfo(
-    val currentWeatherData: CurrentWeatherData,
+    val currentWeatherData: WeatherData?,
     val dailyWeatherData: List<WeatherData>,
     val hourlyWeatherData: Map<Int, List<WeatherData>>
-)
-
-data class CurrentWeatherData(
-    val time: LocalDateTime,
-    val weatherType: WeatherType,
-    val temperature: Double,
-    val windSpeed: Double,
-    val windDirection: String,
-    val sunrise: String,
-    val sunset: String
 )
 
 data class WeatherData(
@@ -28,5 +18,8 @@ data class WeatherData(
     val precipitation: Double,
     val windSpeed: Double,
     val windDirection: String,
-    val dayOfWeek: DayOfWeek? = time.dayOfWeek
+    val humidity: Int = 0,
+    val dayOfWeek: DayOfWeek? = time.dayOfWeek,
+    val sunrise: String = "",
+    val sunset: String = ""
 )
