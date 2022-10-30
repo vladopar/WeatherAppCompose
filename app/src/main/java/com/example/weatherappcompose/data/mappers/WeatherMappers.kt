@@ -22,7 +22,7 @@ fun WeatherDto.toWeatherInfo(): WeatherInfo {
     val dailyWeatherDataList = daily.toDailyWeatherDataList()
     val now = LocalDateTime.now()
 
-    val currentWeatherData = hourlyWeatherDataMap[0]?.find {
+    var tempCurrentWeatherData = hourlyWeatherDataMap[0]?.find {
         val hour = if (now.minute < 30 || now.hour == 23) {
             now.hour
         } else {
@@ -32,7 +32,17 @@ fun WeatherDto.toWeatherInfo(): WeatherInfo {
     }
 
     return WeatherInfo(
-        currentWeatherData = currentWeatherData,
+        currentWeatherData = WeatherData(
+            time = now,
+            weatherType = tempCurrentWeatherData!!.weatherType,
+            temperature = tempCurrentWeatherData.temperature,
+            precipitation = tempCurrentWeatherData.precipitation,
+            windSpeed = tempCurrentWeatherData.windSpeed,
+            windDirection = tempCurrentWeatherData.windDirection,
+            humidity = tempCurrentWeatherData.humidity,
+            sunrise = dailyWeatherDataList[0].sunrise.substringAfter("T"),
+            sunset = dailyWeatherDataList[0].sunset.substringAfter("T")
+        ),
         dailyWeatherData = dailyWeatherDataList,
         hourlyWeatherData = hourlyWeatherDataMap
     )
