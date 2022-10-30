@@ -1,0 +1,38 @@
+package com.example.weatherappcompose.data.remote
+
+import com.squareup.moshi.Json
+
+data class WeatherDto(
+    @Json(name = "current_weather") val currentWeather: CurrentWeatherDataDto,
+    val daily: DailyWeatherDataDto,
+    val hourly: HourlyWeatherDataDto
+)
+
+data class HourlyWeatherDataDto(
+    val times: List<String>,
+    @Json(name = "temperature_2m") val temperatures: List<Double>,
+    val precipitations: List<Double>,
+    @Json(name = "weathercode") val weatherCodes: List<Int>,
+    @Json(name = "windspeed_10m") val windSpeeds: List<Double>,
+    @Json(name = "winddirection_10m") val windDirections: List<Int>
+)
+
+data class DailyWeatherDataDto(
+    @Json(name = "time") val date: List<String>,
+    @Json(name = "weathercode") val weatherCodes: List<Int>,
+    @Json(name = "temperature_2m_max") val temperaturesMax: List<Double>,
+    @Json(name = "temperature_2m_min") val temperaturesMin: List<Double>,
+    @Json(name = "precipitation_sum") val precipitations: List<Double>,
+    @Json(name = "windspeed_10m_max") val windSpeeds: List<Double>,
+    @Json(name = "winddirection_10m_dominant") val windDirections: List<Int>,
+    val sunrise: List<String>,
+    val sunset: List<String>
+)
+
+data class CurrentWeatherDataDto(
+    val temperature: Double,
+    @Json(name = "windspeed") val windSpeed: Double,
+    @Json(name = "winddirection") val windDirection: Int,
+    @Json(name = "weathercode") val weatherCode: Int,
+    val time: String
+)
