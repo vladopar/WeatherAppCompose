@@ -5,8 +5,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class WeatherData(
-    val date: LocalDate? = null,
-    val time: LocalDateTime? = null,
+    val time: LocalDateTime,
     val weatherType: WeatherType,
     val temperature: Double = 0.0,
     val temperatureMax: Double = 0.0,
@@ -14,5 +13,5 @@ data class WeatherData(
     val precipitation: Double,
     val windSpeed: Double,
     val windDirection: String,
-    val dayOfWeek: DayOfWeek? = date?.dayOfWeek ?: null
+    val dayOfWeek: DayOfWeek? = time.dayOfWeek
 )
