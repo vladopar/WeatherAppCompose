@@ -28,7 +28,7 @@ fun WeatherDto.toWeatherInfo(): WeatherInfo {
 fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> {
     return times.mapIndexed { index, time ->
         val weatherType = WeatherType.fromWMO(weatherCodes[index])
-        val temperatureMax = temperatures[index]
+        val temperature = temperatures[index]
         val precipitation = precipitations[index]
         val windSpeed = windSpeeds[index]
         val windDirection = WindDirectionMapper.map(windDirections[index])
@@ -37,7 +37,7 @@ fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> 
             data = WeatherData(
                 time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
                 weatherType = weatherType,
-                temperatureMax = temperatureMax,
+                temperature = temperature,
                 precipitation = precipitation,
                 windSpeed = windSpeed,
                 windDirection = windDirection
