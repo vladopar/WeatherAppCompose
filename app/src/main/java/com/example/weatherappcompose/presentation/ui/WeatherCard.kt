@@ -57,9 +57,9 @@ fun WeatherCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = data.weatherType.weatherDesc,
-                    fontSize = 20.sp,
+                    fontSize = 30.sp,
                 )
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -82,17 +82,17 @@ fun WeatherCard(
                 ) {
                     WeatherDataWithIcon(
                         value = data.windSpeed.toString(),
-                        unit = "km/h ${data.windDirection}",
+                        unit = " km/h, ${data.windDirection}",
                         icon = R.drawable.ic_wind
                     )
                     WeatherDataWithIcon(
                         value = data.humidity.toString(),
                         unit = "%",
-                        icon = R.drawable.ic_drop
+                        icon = R.drawable.ic_humidity
                     )
                     WeatherDataWithIcon(
                         value = data.pressure.toString(),
-                        unit = "hPa",
+                        unit = " hPa",
                         icon = R.drawable.ic_pressure
                     )
                 }

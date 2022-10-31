@@ -92,6 +92,7 @@ fun DailyWeatherDataDto.toDailyWeatherDataList(): List<WeatherData> {
         WeatherData(
             time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay(),
             weatherType = weatherType,
+            temperature = null,
             temperatureMax = temperatureMax,
             temperatureMin = temperatureMin,
             precipitation = precipitation,

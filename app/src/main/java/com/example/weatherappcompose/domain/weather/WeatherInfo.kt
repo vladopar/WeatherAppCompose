@@ -12,7 +12,7 @@ data class WeatherInfo(
 data class WeatherData(
     val time: LocalDateTime,
     val weatherType: WeatherType,
-    val temperature: Double = 0.0,
+    val temperature: Double?,
     val temperatureMax: Double = 0.0,
     val temperatureMin: Double = 0.0,
     val precipitation: Double,
@@ -20,7 +20,7 @@ data class WeatherData(
     val windDirection: String,
     val humidity: Int = 0,
     val pressure: Double = 0.0,
-    val dayOfWeek: DayOfWeek? = time.dayOfWeek,
+    val dayOfWeek: DayOfWeek = time.dayOfWeek,
     val sunrise: String = "",
     val sunset: String = ""
 )
