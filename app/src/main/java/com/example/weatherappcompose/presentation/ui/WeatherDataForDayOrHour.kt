@@ -2,6 +2,7 @@ package com.example.weatherappcompose.presentation.ui
 
 import android.widget.Space
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherappcompose.R
 import com.example.weatherappcompose.domain.weather.WeatherData
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -27,6 +29,7 @@ fun WeatherDataForDayOrHour(
 ) {
     var dateTimeString = ""
     var temperatureString = ""
+    val hour = LocalDateTime.now().hour
 
     when (weatherData.temperature) {
         null -> {
@@ -41,7 +44,8 @@ fun WeatherDataForDayOrHour(
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
-    ) {
+            .border(color = Color.Black, width = if (hour == weatherData.time.hour) 4.dp else 0.dp, shape = RoundedCornerShape(8.dp))
+            ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,

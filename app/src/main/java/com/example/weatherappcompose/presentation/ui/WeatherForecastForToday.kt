@@ -1,5 +1,6 @@
 package com.example.weatherappcompose.presentation.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -7,6 +8,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -21,6 +23,9 @@ fun WeatherForecastForToday(
     state: WeatherState,
     modifier: Modifier = Modifier
 ) {
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+
     state.weatherInfo?.hourlyWeatherData?.get(0)?.let { data ->
         Column(
             modifier = modifier
@@ -35,6 +40,7 @@ fun WeatherForecastForToday(
             )
             Spacer(modifier = Modifier.height(16.dp))
             LazyRow(
+                state = listState,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 content = {
                     items(data) { weatherData ->
@@ -45,7 +51,10 @@ fun WeatherForecastForToday(
                         )
                     }
                 })
+            LaunchedEffect(listState) {
+                val index = LocalDateTime.now().hour
+                listState.scrollToItem(index, 0)
+            }
         }
     }
-
 }
