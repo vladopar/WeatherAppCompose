@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,6 +25,7 @@ fun WeatherCard(
         Card(
             shape = RoundedCornerShape(10.dp),
             modifier = modifier.padding(16.dp)
+                .shadow(4.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -43,13 +45,14 @@ fun WeatherCard(
                     modifier = Modifier
                         .align(Alignment.End)
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(32.dp))
                 Image(
                     painter = painterResource(id = data.weatherType.iconRes),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(200.dp)
+                        .width(200.dp)
                 )
+                Spacer(modifier = Modifier.height(32.dp))
                 Text(
                     text = "${data.temperature} °C",
                     fontSize = 50.sp

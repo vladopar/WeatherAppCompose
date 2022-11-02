@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,16 +25,17 @@ fun WeatherForecastForToday(
     modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
 
-    state.weatherInfo?.hourlyWeatherData?.get(0)?.let { data ->
+    state.weatherInfo?.dailyWeatherData?.let { data ->
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                //.padding(horizontal = 16.dp)
         ) {
             Text(
-                text = "TODAY",
+                text = "NEXT WEEK",
+                modifier = Modifier
+                    .padding(start = 16.dp),
                 color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -43,8 +45,9 @@ fun WeatherForecastForToday(
                 state = listState,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 content = {
-                    items(data) { weatherData ->
+                    itemsIndexed(data) { index, weatherData ->
                         WeatherDataForDayOrHour(
+                            index = index,
                             weatherData = weatherData,
                             modifier = Modifier
                                 .height(160.dp)

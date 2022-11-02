@@ -1,6 +1,5 @@
 package com.example.weatherappcompose.presentation.ui
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -11,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun WeatherDataForDayOrHour(
+    index: Int,
     weatherData: WeatherData,
     textColor: Color = MaterialTheme.colorScheme.onBackground,
     modifier: Modifier = Modifier
@@ -33,7 +34,12 @@ fun WeatherDataForDayOrHour(
 
     when (weatherData.temperature) {
         null -> {
-            dateTimeString = weatherData.time.format(DateTimeFormatter.ofPattern("yyyy--MM-dd"))
+            dateTimeString = if (index == 0) {
+                "TODAY"
+            } else {
+                weatherData.dayOfWeek.toString()
+                    .lowercase().replaceFirstChar { it.uppercase() }
+            }
             temperatureString = "${weatherData.temperatureMin} / ${weatherData.temperatureMax} °C"
         }
         else -> {
@@ -44,12 +50,19 @@ fun WeatherDataForDayOrHour(
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
-            .border(color = Color.Black, width = if (hour == weatherData.time.hour) 4.dp else 0.dp, shape = RoundedCornerShape(8.dp))
-            ) {
+            .border(
+                color = Color.Black,
+                width = if (hour == weatherData.time.hour) 4.dp else 0.dp,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .shadow(4.dp)
+            .width(180.dp)
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(8.dp)
         ) {
             Text(
