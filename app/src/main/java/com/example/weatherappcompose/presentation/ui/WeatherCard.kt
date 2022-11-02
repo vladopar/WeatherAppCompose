@@ -1,6 +1,7 @@
 package com.example.weatherappcompose.presentation.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -9,12 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weatherappcompose.R
 import com.example.weatherappcompose.presentation.WeatherState
 import java.time.format.DateTimeFormatter
-import com.example.weatherappcompose.R
 
 @Composable
 fun WeatherCard(
@@ -24,7 +26,8 @@ fun WeatherCard(
     state.weatherInfo?.currentWeatherData?.let { data ->
         Card(
             shape = RoundedCornerShape(10.dp),
-            modifier = modifier.padding(16.dp)
+            modifier = modifier
+                .padding(16.dp)
                 .shadow(4.dp)
         ) {
             Column(
@@ -45,24 +48,29 @@ fun WeatherCard(
                     modifier = Modifier
                         .align(Alignment.End)
                 )
-                Spacer(modifier = Modifier.height(32.dp))
-                Image(
-                    painter = painterResource(id = data.weatherType.iconRes),
-                    contentDescription = null,
+                Spacer(modifier = Modifier.height(16.dp))
+                Box(
                     modifier = Modifier
-                        .width(200.dp)
-                )
-                Spacer(modifier = Modifier.height(32.dp))
+                        .height(180.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = data.weatherType.iconRes),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(180.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "${data.temperature} °C",
                     fontSize = 50.sp
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = data.weatherType.weatherDesc,
                     fontSize = 30.sp,
                 )
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
