@@ -1,5 +1,6 @@
 package com.example.weatherappcompose.di
 
+import com.example.weatherappcompose.data.remote.LocationApi
 import com.example.weatherappcompose.data.remote.WeatherApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -34,6 +35,16 @@ object AppModule {
             .baseUrl("https://api.open-meteo.com/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(httpClient)
+            .build()
+            .create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationApi(): LocationApi {
+        return Retrofit.Builder()
+            .baseUrl("https://https://geocoding-api.open-meteo.com/")
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create()
     }
