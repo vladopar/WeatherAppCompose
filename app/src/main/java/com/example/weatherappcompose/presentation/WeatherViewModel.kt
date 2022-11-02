@@ -25,7 +25,7 @@ class WeatherViewModel @Inject constructor(
     fun loadWeatherInfo() {
         viewModelScope.launch {
             state = state.copy()
-            when(val result = repository.getWeatherData(lat, long)) {
+            when (val result = repository.getWeatherData(lat, long)) {
                 is Resource.Success -> {
                     state = state.copy(
                         weatherInfo = result.data
@@ -39,5 +39,4 @@ class WeatherViewModel @Inject constructor(
             }
         }
     }
-
 }

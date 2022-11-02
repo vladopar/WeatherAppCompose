@@ -1,4 +1,4 @@
-package com.example.weatherappcompose.presentation.ui
+package com.example.weatherappcompose.presentation.ui.mainScreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
