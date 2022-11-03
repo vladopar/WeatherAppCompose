@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.weatherappcompose.presentation.LocationViewModel
 import com.example.weatherappcompose.presentation.WeatherViewModel
 import com.example.weatherappcompose.presentation.ui.locationSearchScreen.LocationSearchScreen
 import com.example.weatherappcompose.presentation.ui.mainScreen.CurrentWeatherScreen
@@ -24,11 +25,12 @@ enum class WeatherAppScreens() {
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: WeatherViewModel by viewModels()
+    private val weatherViewModel: WeatherViewModel by viewModels()
+    private val locationViewModel: LocationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.loadWeatherInfo()
+        weatherViewModel.loadWeatherInfo()
         setContent {
             WeatherAppComposeTheme {
                 val navController: NavHostController = rememberNavController()
@@ -44,12 +46,13 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = WeatherAppScreens.CurrentWeatherScreen.name) {
                         CurrentWeatherScreen(
-                            viewModel = viewModel,
+                            viewModel = weatherViewModel,
                             onSearchIconClick = { navController.navigate(WeatherAppScreens.LocationSearchScreen.name) }
                         )
                     }
                     composable(route = WeatherAppScreens.LocationSearchScreen.name) {
                         LocationSearchScreen(
+                            locationViewModel = locationViewModel,
                             navigateUp = {navController.navigateUp()}
                         )
                     }
@@ -60,6 +63,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadWeatherInfo()
+        weatherViewModel.loadWeatherInfo()
     }
 }

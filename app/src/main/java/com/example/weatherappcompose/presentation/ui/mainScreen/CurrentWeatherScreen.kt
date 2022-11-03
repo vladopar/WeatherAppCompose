@@ -9,8 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import com.example.weatherappcompose.presentation.WeatherViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,7 +18,7 @@ fun CurrentWeatherScreen(
     onSearchIconClick: () -> Unit,
 ) {
     Scaffold(
-        topBar = { TopBar(onSearchIconClick) }
+        topBar = { CurrentWeatherTopBar(onSearchIconClick) }
     ) {
         Column(
             modifier = Modifier
@@ -37,7 +35,7 @@ fun CurrentWeatherScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(
+fun CurrentWeatherTopBar(
     onSearchIconClick: () -> Unit
 ) {
     TopAppBar(

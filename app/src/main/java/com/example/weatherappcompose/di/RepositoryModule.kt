@@ -1,6 +1,8 @@
 package com.example.weatherappcompose.di
 
+import com.example.weatherappcompose.data.repositories.LocationRepositoryImpl
 import com.example.weatherappcompose.data.repositories.WeatherRepositoryImpl
+import com.example.weatherappcompose.domain.repositories.LocationRepository
 import com.example.weatherappcompose.domain.repositories.WeatherRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindWeatherRepository(
         weatherRepositoryImpl: WeatherRepositoryImpl
     ): WeatherRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindLocationRepository(
+        locationRepositoryImpl: LocationRepositoryImpl
+    ): LocationRepository
 }
