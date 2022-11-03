@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -25,6 +27,8 @@ fun LocationSearchScreen(
 ) {
     var textFieldState by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
+
+    var job: Job? = null
 
     Scaffold(
         topBar = { LocationSearchTopBar(navigateUp) }
@@ -42,7 +46,8 @@ fun LocationSearchScreen(
                     value = textFieldState,
                     onValueChange = { text ->
                         textFieldState = text
-                        coroutineScope.launch {
+                        job?.cancel()
+                        job = MainScope().launch {
                             delay(400)
                             viewModel.loadLocationData(textFieldState.trim())
                         }

@@ -1,6 +1,5 @@
 package com.example.weatherappcompose.data.repositories
 
-import android.util.Log
 import com.example.weatherappcompose.data.mappers.toLocationList
 import com.example.weatherappcompose.data.remote.LocationApi
 import com.example.weatherappcompose.domain.location.Location

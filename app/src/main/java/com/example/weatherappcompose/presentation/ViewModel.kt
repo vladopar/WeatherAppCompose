@@ -40,7 +40,7 @@ class ViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Toast.makeText(getApplication(), "Server problem", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT).show()
                     state = state.copy(
                         weatherInfo = null
                     )
@@ -59,7 +59,7 @@ class ViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Toast.makeText(getApplication(), "Server problem", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT).show()
                     state = state.copy(
                         locationList = null
                     )
