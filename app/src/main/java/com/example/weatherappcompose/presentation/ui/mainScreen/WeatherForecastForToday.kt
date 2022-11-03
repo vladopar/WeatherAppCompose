@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.weatherappcompose.presentation.WeatherState
+import com.example.weatherappcompose.presentation.UiState
 import java.time.LocalDateTime
 
 @Composable
 fun WeatherForecastForToday(
-    state: WeatherState,
+    state: UiState,
     modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()

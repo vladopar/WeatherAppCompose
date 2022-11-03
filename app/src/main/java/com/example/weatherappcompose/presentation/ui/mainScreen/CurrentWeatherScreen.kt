@@ -9,12 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.weatherappcompose.presentation.WeatherViewModel
+import com.example.weatherappcompose.presentation.ViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrentWeatherScreen(
-    viewModel: WeatherViewModel,
+    viewModel: ViewModel,
     onSearchIconClick: () -> Unit,
 ) {
     Scaffold(

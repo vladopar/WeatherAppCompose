@@ -13,12 +13,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.presentation.WeatherState
+import com.example.weatherappcompose.presentation.UiState
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun WeatherCard(
-    state: WeatherState,
+    state: UiState,
     modifier: Modifier = Modifier
 ) {
     state.weatherInfo?.currentWeatherData?.let { data ->

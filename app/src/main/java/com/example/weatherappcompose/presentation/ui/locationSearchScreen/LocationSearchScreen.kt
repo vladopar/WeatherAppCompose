@@ -12,7 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.weatherappcompose.presentation.LocationViewModel
+import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LocationSearchScreen(
-    locationViewModel: LocationViewModel,
+    viewModel: ViewModel,
     navigateUp: () -> Unit
 ) {
     var textFieldState by remember { mutableStateOf("") }
@@ -44,7 +44,7 @@ fun LocationSearchScreen(
                         textFieldState = text
                         coroutineScope.launch {
                             delay(400)
-                            locationViewModel.loadLocationData(textFieldState.trim())
+                            viewModel.loadLocationData(textFieldState.trim())
                         }
                     },
                     singleLine = true,
@@ -58,7 +58,7 @@ fun LocationSearchScreen(
                     trailingIcon = {
                         IconButton(onClick = {
                             textFieldState = ""
-                            locationViewModel.loadLocationData(textFieldState)
+                            viewModel.loadLocationData(textFieldState)
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Close,
@@ -71,7 +71,7 @@ fun LocationSearchScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                locationViewModel.state.locationList?.let {
+                viewModel.state.locationList?.let {
                     LazyColumn(
 
                     ) {
