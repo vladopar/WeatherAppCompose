@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -13,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.presentation.LocationViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,6 +24,7 @@ fun LocationSearchScreen(
     navigateUp: () -> Unit
 ) {
     var textFieldState by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = { LocationSearchTopBar(navigateUp) }
@@ -38,7 +42,10 @@ fun LocationSearchScreen(
                     value = textFieldState,
                     onValueChange = { text ->
                         textFieldState = text
-                        locationViewModel.loadLocationData(textFieldState)
+                        coroutineScope.launch {
+                            delay(400)
+                            locationViewModel.loadLocationData(textFieldState.trim())
+                        }
                     },
                     singleLine = true,
                     label = { Text(text = "Search location") },
@@ -62,11 +69,17 @@ fun LocationSearchScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(16.dp))
 
                 locationViewModel.state.locationList?.let {
-                    LazyColumn() {
+                    LazyColumn(
+
+                    ) {
                         items(it) { item ->
-                            LocationLazyColumnItem(location = item)
+                            LocationLazyColumnItem(
+                                location = item,
+                                icon = Icons.Filled.Favorite
+                            )
                         }
                     }
                 }
