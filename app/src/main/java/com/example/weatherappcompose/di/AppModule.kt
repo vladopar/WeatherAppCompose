@@ -14,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
+import kotlin.jvm.internal.Intrinsics.Kotlin
 
 
 @Module
@@ -42,9 +43,13 @@ object AppModule {
     @Provides
     @Singleton
     fun provideLocationApi(): LocationApi {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
         return Retrofit.Builder()
-            .baseUrl("https://https://geocoding-api.open-meteo.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .baseUrl("https://geocoding-api.open-meteo.com/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create()
     }

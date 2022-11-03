@@ -1,12 +1,11 @@
 package com.example.weatherappcompose.data.repositories
 
+import android.util.Log
 import com.example.weatherappcompose.data.mappers.toLocationList
 import com.example.weatherappcompose.data.remote.LocationApi
-import com.example.weatherappcompose.data.remote.LocationDto
 import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.domain.repositories.LocationRepository
 import com.example.weatherappcompose.domain.util.Resource
-import com.example.weatherappcompose.domain.weather.WeatherInfo
 import retrofit2.HttpException
 import javax.inject.Inject
 

@@ -3,6 +3,7 @@ package com.example.weatherappcompose.presentation.ui.locationSearchScreen
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,10 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.presentation.LocationViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,8 +19,6 @@ fun LocationSearchScreen(
     navigateUp: () -> Unit
 ) {
     var textFieldState by remember { mutableStateOf("") }
-    var job: Job? = null
-
 
     Scaffold(
         topBar = { LocationSearchTopBar(navigateUp) }
@@ -50,6 +45,17 @@ fun LocationSearchScreen(
                             imageVector = Icons.Filled.Search,
                             contentDescription = null
                         )
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            textFieldState = ""
+                            locationViewModel.loadLocationData(textFieldState)
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.Close,
+                                contentDescription = "Delete text"
+                            )
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()

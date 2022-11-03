@@ -1,10 +1,12 @@
 package com.example.weatherappcompose.data.mappers
 
+import android.util.Log
 import com.example.weatherappcompose.data.remote.LocationDto
 import com.example.weatherappcompose.domain.location.Location
 
-fun LocationDto.toLocationList(): List<Location> {
+fun LocationDto.toLocationList(): MutableList<Location> {
     val list = mutableListOf<Location>()
+    Log.d("XXX","mapper called")
     for (location in results) {
         list.add(
             Location(
@@ -17,5 +19,6 @@ fun LocationDto.toLocationList(): List<Location> {
             )
         )
     }
+    Log.d("XXX","$list")
     return list
 }
