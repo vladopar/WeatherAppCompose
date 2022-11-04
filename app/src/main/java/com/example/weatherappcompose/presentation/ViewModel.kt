@@ -1,6 +1,7 @@
 package com.example.weatherappcompose.presentation
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +51,7 @@ class ViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
+                    Log.d("weather", "${result.message}")
                     Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT).show()
                     state = state.copy(
                         weatherInfo = null
@@ -69,6 +71,7 @@ class ViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
+                    Log.d("location", "${result.message}")
                     Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT).show()
                     state = state.copy(
                         locationList = null

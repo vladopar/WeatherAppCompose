@@ -87,7 +87,10 @@ fun LocationSearchScreen(
                                 location = item,
                                 icon = Icons.Filled.Favorite,
                                 onClick = {
-                                    viewModel.updateLocationState(item)
+                                    viewModel.updateLocationState(item.copy(
+                                        lat = Math.round(item.lat * 10000.0) / 10000.0,
+                                        long = Math.round(item.long * 10000.0) / 10000.0
+                                    ))
                                     navigateUp()
                                 }
                             )
