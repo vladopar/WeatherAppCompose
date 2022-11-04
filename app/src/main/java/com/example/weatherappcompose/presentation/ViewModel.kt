@@ -23,12 +23,6 @@ class ViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private var _lat = 48.90
-    val lat = _lat
-
-    private var _long = 18.06
-    val long = _long
-
     private val location = Location(
         id = null,
         name = "Trencin",
@@ -41,10 +35,10 @@ class ViewModel @Inject constructor(
     var state by mutableStateOf(UiState(currentSelectedLocation = location))
         private set
 
-    fun loadWeatherInfo(lat: Double, long: Double) {
+    fun loadWeatherInfo(location: Location) {
         viewModelScope.launch {
             state = state.copy()
-            when (val result = weatherRepository.getWeatherData(lat, long)) {
+            when (val result = weatherRepository.getWeatherData(location.lat, location.lon)) {
                 is Resource.Success -> {
                     state = state.copy(
                         weatherInfo = result.data
