@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
                     backStackEntry?.destination?.route
                         ?: WeatherAppScreens.CurrentWeatherScreen.name
                 )
-
                 NavHost(
                     navController = navController,
                     startDestination = WeatherAppScreens.CurrentWeatherScreen.name,

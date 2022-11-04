@@ -80,15 +80,9 @@ fun LocationLazyColumnItem(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-/*
-                Text(
-                    text = location.countryCode,
-                    fontSize = 36.sp
-                )
-*/
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://hatscripts.github.io/circle-flags/flags/${location.countryCode}.svg")
+                        .data("https://hatscripts.github.io/circle-flags/flags/${location.countryCode.lowercase()}.svg")
                         .decoderFactory(SvgDecoder.Factory())
                         .build(),
                     contentDescription = null,
