@@ -55,11 +55,10 @@ fun FavoriteLocationScreen(
                 }
                 if (viewModel.state.favoriteLocationList.isNullOrEmpty()) {
                     Spacer(modifier = Modifier.weight(0.5f))
-                    Text(
-                        text = "Empty list",
-                        modifier = Modifier
-                            .weight(0.5f)
-                    )
+                    Text(text = "Empty list",
+                    modifier = Modifier
+                        .weight(0.5f)
+                        )
                 }
             }
         }

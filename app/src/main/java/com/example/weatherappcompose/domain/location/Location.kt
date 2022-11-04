@@ -8,20 +8,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "favoritelocations")
 data class Location(
     @PrimaryKey(autoGenerate = false)
-    var id: Int?,
-    var name: String,
-    var lat: Double,
-    var long: Double,
+    val id: Int?,
+    val name: String,
+    val lat: Double,
+    val lon: Double,
     @ColumnInfo(name = "countrycode")
-    var countryCode: String?,
-    var region: String?
-) {
-    constructor() : this(
-        0,
-        "",
-        0.0,
-        0.0,
-        "",
-        ""
-    )
-}
+    val countryCode: String?,
+    val region: String?
+)

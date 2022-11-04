@@ -33,7 +33,7 @@ class ViewModel @Inject constructor(
         id = null,
         name = "Trencin",
         lat = 48.90,
-        long = 18.06,
+        lon = 18.06,
         countryCode = "SK",
         region = null
     )
