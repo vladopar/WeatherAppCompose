@@ -18,11 +18,11 @@ private data class IndexedWeatherData(
 
 fun WeatherDto.toWeatherInfo(): WeatherInfo {
 
-    val hourlyWeatherDataMap = hourly.toHourlyWeatherDataList()
-    val dailyWeatherDataList = daily.toDailyWeatherDataList()
+    val hourlyWeatherDataMap = hourly?.toHourlyWeatherDataList()
+    val dailyWeatherDataList = daily?.toDailyWeatherDataList()
     val now = LocalDateTime.now()
 
-    var tempCurrentWeatherData = hourlyWeatherDataMap[0]?.find {
+    var tempCurrentWeatherData = hourlyWeatherDataMap?.get(0)?.find {
         it.time.hour == now.hour
     }
 
@@ -36,23 +36,23 @@ fun WeatherDto.toWeatherInfo(): WeatherInfo {
             windDirection = tempCurrentWeatherData.windDirection,
             humidity = tempCurrentWeatherData.humidity,
             pressure = tempCurrentWeatherData.pressure,
-            sunrise = dailyWeatherDataList[0].sunrise.substringAfter("T"),
-            sunset = dailyWeatherDataList[0].sunset.substringAfter("T")
+            sunrise = dailyWeatherDataList?.get(0)?.sunrise?.substringAfter("T") ?: "",
+            sunset = dailyWeatherDataList?.get(0)?.sunset?.substringAfter("T") ?: ""
         ),
-        dailyWeatherData = dailyWeatherDataList,
-        hourlyWeatherData = hourlyWeatherDataMap
+        dailyWeatherData = dailyWeatherDataList ?: emptyList(),
+        hourlyWeatherData = hourlyWeatherDataMap ?: emptyMap()
     )
 }
 
 fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> {
-    return times.mapIndexed { index, time ->
-        val weatherType = WeatherType.fromWMO(weatherCodes[index])
-        val temperature = temperatures[index]
-        val precipitation = precipitations[index]
-        val windSpeed = windSpeeds[index]
-        val windDirection = WindDirectionMapper.map(windDirections[index])
-        val humidity = humidities[index]
-        val pressure = pressures[index]
+    return times?.mapIndexed { index, time ->
+        val weatherType = WeatherType.fromWMO(weatherCodes?.get(index) ?: 0)
+        val temperature = temperatures?.get(index)
+        val precipitation = precipitations?.get(index) ?: 0.0
+        val windSpeed = windSpeeds?.get(index) ?: 0.0
+        val windDirection = WindDirectionMapper.map(windDirections?.get(index) ?: 0)
+        val humidity = humidities?.get(index) ?: 0
+        val pressure = pressures?.get(index) ?: 0.0
         IndexedWeatherData(
             index = index,
             data = WeatherData(
@@ -66,24 +66,24 @@ fun HourlyWeatherDataDto.toHourlyWeatherDataList(): Map<Int, List<WeatherData>> 
                 pressure = pressure
             )
         )
-    }.groupBy {
+    }?.groupBy {
         it.index / 24
-    }.mapValues { it ->
+    }?.mapValues { it ->
         it.value.map { it.data }
-    }
+    } ?: emptyMap()
 
 }
 
 fun DailyWeatherDataDto.toDailyWeatherDataList(): List<WeatherData> {
-    return date.mapIndexed { index, date ->
-        val weatherType = WeatherType.fromWMO(weatherCodes[index])
-        val temperatureMax = temperaturesMax[index]
-        val temperatureMin = temperaturesMin[index]
-        val precipitation = precipitations[index]
-        val windSpeed = windSpeeds[index]
-        val windDirection = WindDirectionMapper.map(windDirections[index])
-        val sunrise = sunrises[index]
-        val sunset = sunsets[index]
+    return date?.mapIndexed { index, date ->
+        val weatherType = WeatherType.fromWMO(weatherCodes?.get(index) ?: 0)
+        val temperatureMax = temperaturesMax?.get(index) ?: 0.0
+        val temperatureMin = temperaturesMin?.get(index) ?: 0.0
+        val precipitation = precipitations?.get(index) ?: 0.0
+        val windSpeed = windSpeeds?.get(index) ?: 0.0
+        val windDirection = WindDirectionMapper.map(windDirections?.get(index) ?: 0)
+        val sunrise = sunrises?.get(index) ?: ""
+        val sunset = sunsets?.get(index) ?: ""
         WeatherData(
             time = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay(),
             weatherType = weatherType,
@@ -96,5 +96,5 @@ fun DailyWeatherDataDto.toDailyWeatherDataList(): List<WeatherData> {
             sunrise = sunrise,
             sunset = sunset
         )
-    }
+    } ?: emptyList()
 }
