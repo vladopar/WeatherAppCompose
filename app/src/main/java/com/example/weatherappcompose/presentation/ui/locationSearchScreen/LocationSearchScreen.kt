@@ -99,6 +99,12 @@ fun LocationSearchScreen(
                                         long = Math.round(item.long * 10000.0) / 10000.0
                                     ))
                                     navigateUp()
+                                },
+                                onIconClick = {
+                                    viewModel.insertFavoriteLocation(item.copy(
+                                        lat = Math.round(item.lat * 10000.0) / 10000.0,
+                                        long = Math.round(item.long * 10000.0) / 10000.0
+                                    ))
                                 }
                             )
                         }

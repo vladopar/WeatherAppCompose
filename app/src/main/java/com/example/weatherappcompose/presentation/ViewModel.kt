@@ -87,4 +87,27 @@ class ViewModel @Inject constructor(
         )
     }
 
+    fun loadFavoriteLocationData() {
+        viewModelScope.launch {
+            state = state.copy(
+                favoriteLocationList = locationRepository.getFavoriteLocations()
+            )
+        }
+    }
+
+    fun insertFavoriteLocation(location: Location) {
+        viewModelScope.launch {
+            locationRepository.insertFavoriteLocation(location)
+        }
+    }
+
+    fun deleteFavoriteLocation(location: Location) {
+        viewModelScope.launch {
+            locationRepository.deleteFavoriteLocation(location)
+            state = state.copy(
+                favoriteLocationList = locationRepository.getFavoriteLocations()
+            )
+        }
+    }
+
 }

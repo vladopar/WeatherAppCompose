@@ -1,6 +1,9 @@
 package com.example.weatherappcompose.presentation.ui.favoriteLocationScreen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -8,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.presentation.ViewModel
+import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
 import com.example.weatherappcompose.presentation.ui.commonComposables.TopBarWithNavigateUp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -16,7 +20,7 @@ fun FavoriteLocationScreen(
     viewModel: ViewModel,
     navigateUp: () -> Unit,
 ) {
-
+    viewModel.loadFavoriteLocationData()
 
     Scaffold(
         topBar = { TopBarWithNavigateUp("Favorite locations", navigateUp) }
@@ -32,25 +36,31 @@ fun FavoriteLocationScreen(
                     .padding(16.dp)
             ) {
 
-/*
-                viewModel.state.favouriteLocationList?.let {
+                viewModel.state.favoriteLocationList?.let {
                     LazyColumn() {
                         items(it) { item ->
                             LocationLazyColumnItem(
                                 location = item,
                                 icon = Icons.Filled.Delete,
                                 onClick = {
-                                    viewModel.updateLocationState(item.copy(
-                                        lat = Math.round(item.lat * 10000.0) / 10000.0,
-                                        long = Math.round(item.long * 10000.0) / 10000.0
-                                    ))
+                                    viewModel.updateLocationState(item)
                                     navigateUp()
+                                },
+                                onIconClick = {
+                                    viewModel.deleteFavoriteLocation(item)
                                 }
                             )
                         }
                     }
                 }
-*/
+                if (viewModel.state.favoriteLocationList.isNullOrEmpty()) {
+                    Spacer(modifier = Modifier.weight(0.5f))
+                    Text(
+                        text = "Empty list",
+                        modifier = Modifier
+                            .weight(0.5f)
+                    )
+                }
             }
         }
     }

@@ -25,18 +25,9 @@ import com.example.weatherappcompose.domain.location.Location
 fun LocationLazyColumnItem(
     location: Location,
     icon: ImageVector,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onIconClick: () -> Unit
 ) {
-    var isNeedColorChange by remember {
-        mutableStateOf(false)
-    }
-    val startColor = MaterialTheme.colorScheme.onBackground
-    val endColor = Color.Green
-
-    val color by animateColorAsState(
-        targetValue = if (isNeedColorChange) endColor else startColor,
-        animationSpec = tween(500)
-    )
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -91,15 +82,14 @@ fun LocationLazyColumnItem(
                 )
                 Spacer(modifier = Modifier.width(24.dp))
                 IconButton(
-                    onClick = { /*TODO*/
-                        isNeedColorChange = !isNeedColorChange
+                    onClick = {
+                        onIconClick()
                     },
                     modifier = Modifier,
                 ) {
                     Icon(
                         imageVector = icon,
                         contentDescription = "Save to favorites",
-                        tint = color,
                         modifier = Modifier
                             .size(36.dp)
                     )
