@@ -17,6 +17,8 @@ fun CurrentWeatherScreen(
     viewModel: ViewModel,
     onSearchIconClick: () -> Unit,
 ) {
+    viewModel.loadWeatherInfo(viewModel.state.currentSelectedLocation.lat, viewModel.state.currentSelectedLocation.long)
+
     Scaffold(
         topBar = { CurrentWeatherTopBar(onSearchIconClick) }
     ) {

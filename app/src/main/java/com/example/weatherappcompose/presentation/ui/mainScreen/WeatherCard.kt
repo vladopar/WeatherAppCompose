@@ -42,7 +42,8 @@ fun WeatherCard(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Location placeholder",
+                    text = state.currentSelectedLocation.name + ", " + (state.currentSelectedLocation.countryCode?.uppercase()
+                        ?: ""),
                     modifier = Modifier
                         .align(Alignment.End)
                 )

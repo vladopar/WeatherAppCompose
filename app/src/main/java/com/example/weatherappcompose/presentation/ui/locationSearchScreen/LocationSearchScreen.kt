@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LocationSearchScreen(
     viewModel: ViewModel,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
     var textFieldState by remember { mutableStateOf("") }
 
@@ -85,7 +85,11 @@ fun LocationSearchScreen(
                         items(it) { item ->
                             LocationLazyColumnItem(
                                 location = item,
-                                icon = Icons.Filled.Favorite
+                                icon = Icons.Filled.Favorite,
+                                onClick = {
+                                    viewModel.updateLocationState(item)
+                                    navigateUp()
+                                }
                             )
                         }
                     }

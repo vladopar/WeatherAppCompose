@@ -1,19 +1,16 @@
 package com.example.weatherappcompose.presentation
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.domain.repositories.LocationRepository
 import com.example.weatherappcompose.domain.repositories.WeatherRepository
 import com.example.weatherappcompose.domain.util.Resource
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,13 +22,25 @@ class ViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val lat = 48.90
-    private val long = 18.06
+    private var _lat = 48.90
+    val lat = _lat
 
-    var state by mutableStateOf(UiState())
+    private var _long = 18.06
+    val long = _long
+
+    private val location = Location(
+        id = null,
+        name = "Trencin",
+        lat = 48.90,
+        long = 18.06,
+        countryCode = "SK",
+        region = null
+    )
+
+    var state by mutableStateOf(UiState(currentSelectedLocation = location))
         private set
 
-    fun loadWeatherInfo() {
+    fun loadWeatherInfo(lat: Double, long: Double) {
         viewModelScope.launch {
             state = state.copy()
             when (val result = weatherRepository.getWeatherData(lat, long)) {
@@ -67,6 +76,12 @@ class ViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateLocationState(location: Location) {
+        state = state.copy(
+            currentSelectedLocation = location
+        )
     }
 
 }

@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.loadWeatherInfo()
         setContent {
             WeatherAppComposeTheme {
                 val navController: NavHostController = rememberNavController()
@@ -56,10 +55,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadWeatherInfo()
     }
 }

@@ -2,10 +2,9 @@ package com.example.weatherappcompose.presentation.ui.commonComposables
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -26,7 +24,8 @@ import com.example.weatherappcompose.domain.location.Location
 @Composable
 fun LocationLazyColumnItem(
     location: Location,
-    icon: ImageVector
+    icon: ImageVector,
+    onClick: () -> Unit
 ) {
     var isNeedColorChange by remember {
         mutableStateOf(false)
@@ -46,6 +45,7 @@ fun LocationLazyColumnItem(
             .fillMaxWidth()
             .shadow(4.dp)
             .height(80.dp)
+            .clickable { onClick() }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -82,7 +82,7 @@ fun LocationLazyColumnItem(
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://hatscripts.github.io/circle-flags/flags/${location.countryCode.lowercase()}.svg")
+                        .data("https://hatscripts.github.io/circle-flags/flags/${location.countryCode?.lowercase()}.svg")
                         .decoderFactory(SvgDecoder.Factory())
                         .build(),
                     contentDescription = null,
@@ -107,19 +107,4 @@ fun LocationLazyColumnItem(
             }
         }
     }
-}
-
-val location = Location(
-    id = 0,
-    name = "Oslo",
-    lat = 0.0,
-    long = 0.0,
-    countryCode = "NO",
-    region = "Oslo County"
-)
-
-@Preview
-@Composable
-fun ItemPreview() {
-    LocationLazyColumnItem(location = location, icon = Icons.Filled.Favorite)
 }
