@@ -1,5 +1,10 @@
 package com.example.weatherappcompose.di
 
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.example.weatherappcompose.data.local.FavoriteLocationRoomDatabase
 import com.example.weatherappcompose.data.remote.LocationApi
 import com.example.weatherappcompose.data.remote.WeatherApi
 import com.squareup.moshi.Moshi
@@ -7,6 +12,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -53,5 +59,21 @@ object AppModule {
             .build()
             .create()
     }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteLocationDatabase(
+        @ApplicationContext app: Context
+    ): FavoriteLocationRoomDatabase {
+        return Room.databaseBuilder(
+            app,
+            FavoriteLocationRoomDatabase::class.java,
+            "favorite_location_database"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteLocationDao(db: FavoriteLocationRoomDatabase) = db.getFavoriteLocationDao()
 
 }
