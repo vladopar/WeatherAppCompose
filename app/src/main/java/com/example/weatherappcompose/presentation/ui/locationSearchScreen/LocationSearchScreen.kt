@@ -4,20 +4,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
-import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
 import kotlinx.coroutines.Job
@@ -34,6 +26,20 @@ fun LocationSearchScreen(
     var textFieldState by remember { mutableStateOf("") }
 
     var job: Job? = null
+
+    val trailingIcon = @Composable {
+        IconButton(onClick = {
+            textFieldState = ""
+            viewModel.loadLocationData(textFieldState)
+        }) {
+            Icon(
+                imageVector = Icons.Filled.Clear,
+                contentDescription = "Delete text",
+            )
+        }
+    }
+
+    viewModel.loadLocationData(textFieldState)
 
     Scaffold(
         topBar = { LocationSearchTopBar(navigateUp) }
@@ -66,17 +72,8 @@ fun LocationSearchScreen(
                             contentDescription = null
                         )
                     },
-                    trailingIcon = {
-                        IconButton(onClick = {
-                            textFieldState = ""
-                            viewModel.loadLocationData(textFieldState)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Close,
-                                contentDescription = "Delete text"
-                            )
-                        }
-                    },
+                    trailingIcon = if (textFieldState.isNotBlank()) trailingIcon
+                    else null,
                     modifier = Modifier
                         .fillMaxWidth()
                 )

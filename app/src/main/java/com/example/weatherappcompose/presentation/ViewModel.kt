@@ -1,6 +1,7 @@
 package com.example.weatherappcompose.presentation
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
