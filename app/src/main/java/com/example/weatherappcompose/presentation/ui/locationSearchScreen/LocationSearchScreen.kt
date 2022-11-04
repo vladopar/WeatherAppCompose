@@ -26,7 +26,6 @@ fun LocationSearchScreen(
     navigateUp: () -> Unit
 ) {
     var textFieldState by remember { mutableStateOf("") }
-    val coroutineScope = rememberCoroutineScope()
 
     var job: Job? = null
 
@@ -74,12 +73,11 @@ fun LocationSearchScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(16.dp))
 
                 viewModel.state.locationList?.let {
-                    LazyColumn(
-
-                    ) {
+                    LazyColumn() {
                         items(it) { item ->
                             LocationLazyColumnItem(
                                 location = item,
