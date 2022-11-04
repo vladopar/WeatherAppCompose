@@ -16,11 +16,12 @@ import com.example.weatherappcompose.presentation.ViewModel
 fun CurrentWeatherScreen(
     viewModel: ViewModel,
     onSearchIconClick: () -> Unit,
+    onFavoriteIconClick: () -> Unit
 ) {
     viewModel.loadWeatherInfo(viewModel.state.currentSelectedLocation.lat, viewModel.state.currentSelectedLocation.long)
 
     Scaffold(
-        topBar = { CurrentWeatherTopBar(onSearchIconClick) }
+        topBar = { CurrentWeatherTopBar(onSearchIconClick, onFavoriteIconClick) }
     ) {
         Column(
             modifier = Modifier
@@ -38,7 +39,8 @@ fun CurrentWeatherScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrentWeatherTopBar(
-    onSearchIconClick: () -> Unit
+    onSearchIconClick: () -> Unit,
+    onFavoriteIconClick: () -> Unit
 ) {
     TopAppBar(
         title = { Text(text = "Current Weather") },
@@ -49,7 +51,7 @@ fun CurrentWeatherTopBar(
                     contentDescription = "Location Search"
                 )
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = onFavoriteIconClick) {
                 Icon(
                     imageVector = Icons.Filled.Favorite,
                     contentDescription = "Favorite Locations"

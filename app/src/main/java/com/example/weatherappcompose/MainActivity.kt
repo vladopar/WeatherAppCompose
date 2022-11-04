@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.weatherappcompose.presentation.ViewModel
+import com.example.weatherappcompose.presentation.ui.favoriteLocationScreen.FavoriteLocationScreen
 import com.example.weatherappcompose.presentation.ui.locationSearchScreen.LocationSearchScreen
 import com.example.weatherappcompose.presentation.ui.mainScreen.CurrentWeatherScreen
 import com.example.weatherappcompose.presentation.ui.theme.WeatherAppComposeTheme
@@ -18,7 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 enum class WeatherAppScreens() {
     CurrentWeatherScreen,
-    LocationSearchScreen
+    LocationSearchScreen,
+    FavoriteLocationScreen
 }
 
 @AndroidEntryPoint
@@ -43,11 +45,18 @@ class MainActivity : ComponentActivity() {
                     composable(route = WeatherAppScreens.CurrentWeatherScreen.name) {
                         CurrentWeatherScreen(
                             viewModel = viewModel,
-                            onSearchIconClick = { navController.navigate(WeatherAppScreens.LocationSearchScreen.name) }
+                            onSearchIconClick = { navController.navigate(WeatherAppScreens.LocationSearchScreen.name) },
+                            onFavoriteIconClick = { navController.navigate(WeatherAppScreens.FavoriteLocationScreen.name)}
                         )
                     }
                     composable(route = WeatherAppScreens.LocationSearchScreen.name) {
                         LocationSearchScreen(
+                            viewModel = viewModel,
+                            navigateUp = {navController.navigateUp()}
+                        )
+                    }
+                    composable(route = WeatherAppScreens.FavoriteLocationScreen.name) {
+                        FavoriteLocationScreen(
                             viewModel = viewModel,
                             navigateUp = {navController.navigateUp()}
                         )
