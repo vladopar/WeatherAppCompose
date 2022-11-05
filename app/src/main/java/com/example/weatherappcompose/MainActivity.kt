@@ -40,7 +40,11 @@ class MainActivity : ComponentActivity() {
                 )
                 NavHost(
                     navController = navController,
-                    startDestination = WeatherAppScreens.CurrentWeatherScreen.name,
+                    startDestination = if (viewModel.state.currentSelectedLocation != null) {
+                        WeatherAppScreens.CurrentWeatherScreen.name
+                    } else {
+                           WeatherAppScreens.LocationSearchScreen.name
+                    },
                 ) {
                     composable(route = WeatherAppScreens.CurrentWeatherScreen.name) {
                         CurrentWeatherScreen(

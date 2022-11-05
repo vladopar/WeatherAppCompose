@@ -32,7 +32,7 @@ class ViewModel @Inject constructor(
         region = null
     )
 
-    var state by mutableStateOf(UiState(currentSelectedLocation = location))
+    var state by mutableStateOf(UiState())
         private set
 
     fun loadWeatherInfo(location: Location) {

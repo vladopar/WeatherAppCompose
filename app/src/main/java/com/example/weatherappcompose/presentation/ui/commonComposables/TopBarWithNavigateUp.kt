@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 @Composable
 fun TopBarWithNavigateUp(
     title: String,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
     TopAppBar(
         title = { Text(text = title) },
