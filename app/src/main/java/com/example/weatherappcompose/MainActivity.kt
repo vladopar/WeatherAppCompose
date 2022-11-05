@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             WeatherAppComposeTheme {
                 val navController: NavHostController = rememberNavController()
+                val backStack = navController.backQueue
                 val backStackEntry by navController.currentBackStackEntryAsState()
                 val currentScreen = WeatherAppScreens.valueOf(
                     backStackEntry?.destination?.route
@@ -56,6 +57,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = WeatherAppScreens.LocationSearchScreen.name) {
                         LocationSearchScreen(
                             viewModel = viewModel,
+                            backStack = backStack,
                             navigateUp = {navController.navigateUp()}
                         )
                     }

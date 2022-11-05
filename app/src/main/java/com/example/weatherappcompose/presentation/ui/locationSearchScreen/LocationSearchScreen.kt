@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
 import com.example.weatherappcompose.presentation.ui.commonComposables.TopBarWithNavigateUp
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LocationSearchScreen(
     viewModel: ViewModel,
+    backStack: ArrayDeque<NavBackStackEntry>,
     navigateUp: () -> Unit,
 ) {
     var textFieldState by remember { mutableStateOf("") }
@@ -41,10 +43,17 @@ fun LocationSearchScreen(
         }
     }
 
+    Log.d("backstack", backStack.size.toString())
+
     viewModel.loadLocationData(textFieldState)
 
     Scaffold(
-        topBar = { TopBarWithNavigateUp("Search location", navigateUp) }
+        topBar = { TopBarWithNavigateUp(
+            "Search location",
+            backStack = backStack,
+            navigateUp = navigateUp
+        ) },
+
     ) {
         Box(
             modifier = Modifier

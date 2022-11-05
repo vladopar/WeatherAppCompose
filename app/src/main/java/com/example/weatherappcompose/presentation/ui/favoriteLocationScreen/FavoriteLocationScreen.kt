@@ -23,7 +23,7 @@ fun FavoriteLocationScreen(
     viewModel.loadFavoriteLocationData()
 
     Scaffold(
-        topBar = { TopBarWithNavigateUp("Favorite locations", navigateUp) }
+        topBar = { TopBarWithNavigateUp("Favorite locations", navigateUp =  navigateUp) }
     ) {
         Box(
             modifier = Modifier
