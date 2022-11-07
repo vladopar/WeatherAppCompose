@@ -1,5 +1,6 @@
 package com.example.weatherappcompose.di
 
+import android.app.Application
 import android.content.Context
 import androidx.compose.ui.platform.LocalContext
 import androidx.room.Room
@@ -7,6 +8,8 @@ import androidx.room.RoomDatabase
 import com.example.weatherappcompose.data.local.FavoriteLocationRoomDatabase
 import com.example.weatherappcompose.data.remote.LocationApi
 import com.example.weatherappcompose.data.remote.WeatherApi
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -75,5 +78,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFavoriteLocationDao(db: FavoriteLocationRoomDatabase) = db.getFavoriteLocationDao()
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(app: Application): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(app)
+    }
 
 }
