@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
@@ -52,10 +53,10 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
 /*
                     startDestination = if (viewModel.state.currentSelectedLocation != null) {
-                        Log.d("json","currLocFromMA: ${viewModel.state.currentSelectedLocation}")
+                        Log.d("json", "currLocFromMA: ${viewModel.state.currentSelectedLocation}")
                         WeatherAppScreens.CurrentWeatherScreen.name
                     } else {
-                           WeatherAppScreens.LocationSearchScreen.name
+                        WeatherAppScreens.LocationSearchScreen.name
                     },
 */
                     startDestination = WeatherAppScreens.CurrentWeatherScreen.name

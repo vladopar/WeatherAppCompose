@@ -37,8 +37,6 @@ fun LocationSearchScreen(
         }
     }
 
-    Log.d("backstack", backStack.size.toString())
-
     viewModel.loadListOfLocationData(textFieldState)
 
     Scaffold(
