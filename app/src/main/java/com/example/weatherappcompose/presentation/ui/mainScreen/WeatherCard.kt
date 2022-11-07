@@ -26,7 +26,7 @@ fun WeatherCard(
             shape = RoundedCornerShape(10.dp),
             modifier = modifier
                 .padding(16.dp)
-                .shadow(4.dp)
+                .shadow(4.dp, RoundedCornerShape(10.dp))
         ) {
             Column(
                 modifier = Modifier

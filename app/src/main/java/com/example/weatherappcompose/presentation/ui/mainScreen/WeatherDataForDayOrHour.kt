@@ -55,7 +55,7 @@ fun WeatherDataForDayOrHour(
                 width = if (hour == weatherData.time.hour) 4.dp else 0.dp,
                 shape = RoundedCornerShape(8.dp)
             )
-            .shadow(4.dp)
+            .shadow(4.dp, RoundedCornerShape(8.dp))
             .width(180.dp)
     ) {
         Column(

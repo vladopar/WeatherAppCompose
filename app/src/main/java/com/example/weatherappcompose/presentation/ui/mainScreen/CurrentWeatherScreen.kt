@@ -20,14 +20,9 @@ fun CurrentWeatherScreen(
     onFavoriteIconClick: () -> Unit
 ) {
 
-//    viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
     LaunchedEffect(key1 = Unit) {
-
-        if (viewModel.state.currentSelectedLocation != null) {
-            viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
-        } else {
-            onSearchIconClick()
-        }
+        viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
+            ?: onSearchIconClick()
     }
 
     Scaffold(
