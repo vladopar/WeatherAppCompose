@@ -27,13 +27,10 @@ enum class WeatherAppScreens() {
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onResume() {
-        super.onResume()
-        viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
-
-    }
 
     private val viewModel: ViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,5 +75,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
+
     }
 }
