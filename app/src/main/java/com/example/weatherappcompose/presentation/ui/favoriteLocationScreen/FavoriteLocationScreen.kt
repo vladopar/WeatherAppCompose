@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
 import com.example.weatherappcompose.presentation.ui.commonComposables.TopBarWithNavigateUp
@@ -18,12 +19,17 @@ import com.example.weatherappcompose.presentation.ui.commonComposables.TopBarWit
 @Composable
 fun FavoriteLocationScreen(
     viewModel: ViewModel,
+    backStack: ArrayDeque<NavBackStackEntry>,
     navigateUp: () -> Unit,
 ) {
     viewModel.loadFavoriteLocationData()
 
     Scaffold(
-        topBar = { TopBarWithNavigateUp("Favorite locations", navigateUp =  navigateUp) }
+        topBar = { TopBarWithNavigateUp(
+            "Favorite locations",
+            backStack = backStack,
+            navigateUp = navigateUp
+        ) }
     ) {
         Box(
             modifier = Modifier

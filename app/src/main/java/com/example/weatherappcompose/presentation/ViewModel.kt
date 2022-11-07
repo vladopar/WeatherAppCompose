@@ -36,6 +36,7 @@ class ViewModel @Inject constructor(
         private set
 
     fun loadWeatherInfo(location: Location) {
+        Log.d("loadWeatherInfo", "loading")
         viewModelScope.launch {
             state = state.copy()
             when (val result = weatherRepository.getWeatherData(location.lat, location.lon)) {
@@ -45,7 +46,7 @@ class ViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Log.d("weather", "${result.message}")
+                    Log.d("loadWeatherInfo", "${result.message}")
                     Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT).show()
                     state = state.copy(
                         weatherInfo = null
@@ -55,10 +56,10 @@ class ViewModel @Inject constructor(
         }
     }
 
-    fun loadLocationData(name: String) {
+    fun loadListOfLocationData(name: String) {
         viewModelScope.launch {
             state = state.copy()
-            when (val result = locationRepository.getLocationData(name = name)) {
+            when (val result = locationRepository.getLocationData(name = name.trim())) {
                 is Resource.Success -> {
                     state = state.copy(
                         locationList = result.data

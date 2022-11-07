@@ -15,10 +15,6 @@ import androidx.navigation.NavBackStackEntry
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.LocationLazyColumnItem
 import com.example.weatherappcompose.presentation.ui.commonComposables.TopBarWithNavigateUp
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,12 +25,10 @@ fun LocationSearchScreen(
 ) {
     var textFieldState by remember { mutableStateOf("") }
 
-    var job: Job? = null
-
     val trailingIcon = @Composable {
         IconButton(onClick = {
             textFieldState = ""
-            viewModel.loadLocationData(textFieldState)
+            viewModel.loadListOfLocationData(textFieldState)
         }) {
             Icon(
                 imageVector = Icons.Filled.Clear,
@@ -45,16 +39,18 @@ fun LocationSearchScreen(
 
     Log.d("backstack", backStack.size.toString())
 
-    viewModel.loadLocationData(textFieldState)
+    viewModel.loadListOfLocationData(textFieldState)
 
     Scaffold(
-        topBar = { TopBarWithNavigateUp(
-            "Search location",
-            backStack = backStack,
-            navigateUp = navigateUp
-        ) },
+        topBar = {
+            TopBarWithNavigateUp(
+                "Search location",
+                backStack = backStack,
+                navigateUp = navigateUp
+            )
+        },
 
-    ) {
+        ) {
         Box(
             modifier = Modifier
                 .padding(it)
@@ -69,13 +65,7 @@ fun LocationSearchScreen(
                     value = textFieldState,
                     onValueChange = { text ->
                         textFieldState = text
-                        job?.cancel()
-                        job = MainScope().launch {
-                            delay(400)
-                            Log.d("xxx",textFieldState.trim())
-                            viewModel.loadLocationData(textFieldState.trim())
-// TODO trim() not working
-                        }
+                        viewModel.loadListOfLocationData(textFieldState)
                     },
                     singleLine = true,
                     label = { Text(text = "Search location") },
@@ -100,17 +90,21 @@ fun LocationSearchScreen(
                                 location = item,
                                 icon = Icons.Filled.Favorite,
                                 onClick = {
-                                    viewModel.updateLocationState(item.copy(
-                                        lat = Math.round(item.lat * 10000.0) / 10000.0,
-                                        lon = Math.round(item.lon * 10000.0) / 10000.0
-                                    ))
+                                    viewModel.updateLocationState(
+                                        item.copy(
+                                            lat = Math.round(item.lat * 10000.0) / 10000.0,
+                                            lon = Math.round(item.lon * 10000.0) / 10000.0
+                                        )
+                                    )
                                     navigateUp()
                                 },
                                 onIconClick = {
-                                    viewModel.insertFavoriteLocation(item.copy(
-                                        lat = Math.round(item.lat * 10000.0) / 10000.0,
-                                        lon = Math.round(item.lon * 10000.0) / 10000.0
-                                    ))
+                                    viewModel.insertFavoriteLocation(
+                                        item.copy(
+                                            lat = Math.round(item.lat * 10000.0) / 10000.0,
+                                            lon = Math.round(item.lon * 10000.0) / 10000.0
+                                        )
+                                    )
                                 }
                             )
                         }
