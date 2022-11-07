@@ -46,7 +46,11 @@ fun LocationSearchScreen(
                 navigateUp = navigateUp
             )
         },
-
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Filled.Search, contentDescription = null)
+            }
+        }
         ) {
         Box(
             modifier = Modifier
