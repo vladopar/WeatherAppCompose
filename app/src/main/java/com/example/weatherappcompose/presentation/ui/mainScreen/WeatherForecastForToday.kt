@@ -26,7 +26,7 @@ fun WeatherForecastForToday(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-            //.padding(horizontal = 16.dp)
+            .padding(bottom = 16.dp)
         ) {
             Text(
                 text = "NEXT WEEK",
