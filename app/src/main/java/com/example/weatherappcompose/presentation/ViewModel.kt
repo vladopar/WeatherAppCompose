@@ -8,12 +8,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.weatherappcompose.data.local.CurrentLocationDataStore
 import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.domain.repositories.LocationRepository
 import com.example.weatherappcompose.domain.repositories.WeatherRepository
 import com.example.weatherappcompose.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +38,8 @@ class ViewModel @Inject constructor(
 
     var state by mutableStateOf(UiState())
         private set
+
+    private val dataStore = CurrentLocationDataStore(application.applicationContext)
 
     fun loadWeatherInfo(location: Location) {
         Log.d("loadWeatherInfo", "loading")
@@ -76,10 +82,20 @@ class ViewModel @Inject constructor(
         }
     }
 
+    suspend fun loadLocationFromDataStore() {
+        state = state.copy(
+            currentSelectedLocation = dataStore.getCurrentLocationString()
+        )
+        Log.d("json","currLocFromVM: ${state.currentSelectedLocation}")
+    }
+
     fun updateLocationState(location: Location) {
         state = state.copy(
             currentSelectedLocation = location
         )
+        viewModelScope.launch {
+            dataStore.saveCurrentLocationString(location)
+        }
     }
 
     fun loadFavoriteLocationData() {

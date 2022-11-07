@@ -1,12 +1,12 @@
 package com.example.weatherappcompose
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +18,7 @@ import com.example.weatherappcompose.presentation.ui.locationSearchScreen.Locati
 import com.example.weatherappcompose.presentation.ui.mainScreen.CurrentWeatherScreen
 import com.example.weatherappcompose.presentation.ui.theme.WeatherAppComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 enum class WeatherAppScreens() {
     CurrentWeatherScreen,
@@ -30,10 +31,13 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: ViewModel by viewModels()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch {
+            viewModel.loadLocationFromDataStore()
+        }
+
         setContent {
             WeatherAppComposeTheme {
                 val navController: NavHostController = rememberNavController()
@@ -43,33 +47,38 @@ class MainActivity : ComponentActivity() {
                     backStackEntry?.destination?.route
                         ?: WeatherAppScreens.CurrentWeatherScreen.name
                 )
+
                 NavHost(
                     navController = navController,
+/*
                     startDestination = if (viewModel.state.currentSelectedLocation != null) {
+                        Log.d("json","currLocFromMA: ${viewModel.state.currentSelectedLocation}")
                         WeatherAppScreens.CurrentWeatherScreen.name
                     } else {
                            WeatherAppScreens.LocationSearchScreen.name
                     },
+*/
+                    startDestination = WeatherAppScreens.CurrentWeatherScreen.name
                 ) {
                     composable(route = WeatherAppScreens.CurrentWeatherScreen.name) {
                         CurrentWeatherScreen(
                             viewModel = viewModel,
                             onSearchIconClick = { navController.navigate(WeatherAppScreens.LocationSearchScreen.name) },
-                            onFavoriteIconClick = { navController.navigate(WeatherAppScreens.FavoriteLocationScreen.name)}
+                            onFavoriteIconClick = { navController.navigate(WeatherAppScreens.FavoriteLocationScreen.name) }
                         )
                     }
                     composable(route = WeatherAppScreens.LocationSearchScreen.name) {
                         LocationSearchScreen(
                             viewModel = viewModel,
                             backStack = backStack,
-                            navigateUp = {navController.navigateUp()}
+                            navigateUp = { navController.navigateUp() }
                         )
                     }
                     composable(route = WeatherAppScreens.FavoriteLocationScreen.name) {
                         FavoriteLocationScreen(
                             viewModel = viewModel,
                             backStack = backStack,
-                            navigateUp = {navController.navigateUp()}
+                            navigateUp = { navController.navigateUp() }
                         )
                     }
                 }
