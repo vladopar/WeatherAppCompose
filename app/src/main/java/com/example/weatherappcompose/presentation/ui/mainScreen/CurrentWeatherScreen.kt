@@ -12,9 +12,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import com.example.weatherappcompose.presentation.ViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,9 +27,13 @@ fun CurrentWeatherScreen(
     onFavoriteIconClick: () -> Unit
 ) {
 
+    val scope = rememberCoroutineScope()
+
     LaunchedEffect(key1 = Unit) {
-        viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
-            ?: onSearchIconClick()
+        scope.launch {
+            viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
+                ?: onSearchIconClick()
+        }
     }
 
     val scrollState = rememberScrollState()

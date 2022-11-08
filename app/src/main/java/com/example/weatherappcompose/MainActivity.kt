@@ -33,8 +33,6 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: ViewModel by viewModels()
 
-    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -85,21 +83,5 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.state.currentSelectedLocation?.let { viewModel.loadWeatherInfo(it) }
-
-    }
-
-    fun getPermissions() {
-        permissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) {
-
-        }
-        permissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
-
     }
 }

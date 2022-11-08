@@ -10,7 +10,15 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.domain.weather.WeatherInfo
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
+import com.google.gson.TypeAdapter
+import com.squareup.moshi.Json
 import kotlinx.coroutines.flow.first
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class DataStore(private val context: Context) {
 
@@ -36,11 +44,13 @@ class DataStore(private val context: Context) {
 
     suspend fun getWeatherInfoString(): WeatherInfo? {
         val json = context.dataStore.data.first()[WEATHER_INFO_KEY]
+        Log.d("json","reading: $json")
         return Gson().fromJson(json, WeatherInfo::class.java)
     }
 
     suspend fun saveWeatherInfoString(weatherInfo: WeatherInfo) {
         val json = Gson().toJson(weatherInfo)
+        Log.d("json","saving: $json")
         context.dataStore.edit { preferences ->
             preferences[WEATHER_INFO_KEY] = json
         }

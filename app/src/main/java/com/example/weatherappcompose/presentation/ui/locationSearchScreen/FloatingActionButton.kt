@@ -24,7 +24,6 @@ fun LocationPermission(
 ) {
     val context = LocalContext.current
 
-
     fun getPositionAndNavigateUp() {
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
             context)
@@ -32,7 +31,7 @@ fun LocationPermission(
             if (gpsLocation != null) {
                 val lat = BigDecimal(gpsLocation.latitude).setScale(2, RoundingMode.HALF_UP).toDouble()
                 val lon = BigDecimal(gpsLocation.longitude).setScale(2, RoundingMode.HALF_UP).toDouble()
-                viewModel.storePositionAsLocation(
+                viewModel.updateLocationState(
                     Location(
                         id = null,
                         name = "GPS position: $lat",
@@ -42,9 +41,10 @@ fun LocationPermission(
                         region = null
                     )
                 )
+                navigateUp()
             }
         }
-        navigateUp()
+
     }
 
 
@@ -62,8 +62,9 @@ fun LocationPermission(
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
                 context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) -> {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            )
+            -> {
                 getPositionAndNavigateUp()
             }
             else -> {

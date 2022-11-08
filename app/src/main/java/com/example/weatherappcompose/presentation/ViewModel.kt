@@ -24,34 +24,27 @@ class ViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val location = Location(
-        id = null,
-        name = "Trencin",
-        lat = 48.90,
-        lon = 18.06,
-        countryCode = "SK",
-        region = null
-    )
-
     var state by mutableStateOf(UiState())
         private set
 
     private val dataStore = DataStore(application.applicationContext)
 
     fun loadWeatherInfo(location: Location) {
-        Log.d("loadWeatherInfo", "loading")
+        Log.d("json", "loading")
         viewModelScope.launch {
             state = state.copy()
             when (val result = weatherRepository.getWeatherData(location.lat, location.lon)) {
                 is Resource.Success -> {
+                    dataStore.saveWeatherInfoString(result.data!!)
                     state = state.copy(
                         weatherInfo = result.data
                     )
                 }
                 is Resource.Error -> {
-                    Log.d("loadWeatherInfo", "${result.message}")
+                    Log.d("json", "${result.message}")
                     Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT).show()
                     state = state.copy(
+// TODO serialize json (problem with LocalDatTime to get WeatherInfo
                         weatherInfo = null
                     )
                 }
@@ -90,6 +83,7 @@ class ViewModel @Inject constructor(
         state = state.copy(
             currentSelectedLocation = location
         )
+        Log.d("json", "location in state: ${state.currentSelectedLocation?.name.toString()}")
         viewModelScope.launch {
             dataStore.saveCurrentLocationString(location)
         }
@@ -117,9 +111,4 @@ class ViewModel @Inject constructor(
             )
         }
     }
-
-    fun storePositionAsLocation(location: Location) {
-        updateLocationState(location)
-    }
-
 }

@@ -40,6 +40,7 @@ fun LocationSearchScreen(
 
     Scaffold(
         topBar = {
+// TODO check backstack and hide navigateUp arrow if it is empty
             TopBarWithNavigateUp(
                 "Search location",
                 backStack = backStack,
@@ -48,7 +49,7 @@ fun LocationSearchScreen(
         },
         floatingActionButton = {
             LocationPermission(viewModel, navigateUp)
-        }
+        },
     ) {
         Box(
             modifier = Modifier
