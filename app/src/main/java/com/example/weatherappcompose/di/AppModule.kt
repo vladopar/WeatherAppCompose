@@ -78,11 +78,4 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFavoriteLocationDao(db: FavoriteLocationRoomDatabase) = db.getFavoriteLocationDao()
-
-    @Provides
-    @Singleton
-    fun provideFusedLocationProviderClient(app: Application): FusedLocationProviderClient {
-        return LocationServices.getFusedLocationProviderClient(app)
-    }
-
 }

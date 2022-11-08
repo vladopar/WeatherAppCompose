@@ -1,6 +1,5 @@
 package com.example.weatherappcompose.presentation.ui.locationSearchScreen
 
-import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -48,11 +47,9 @@ fun LocationSearchScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Filled.GpsFixed, contentDescription = null)
-            }
+            LocationPermission(viewModel, navigateUp)
         }
-        ) {
+    ) {
         Box(
             modifier = Modifier
                 .padding(it)

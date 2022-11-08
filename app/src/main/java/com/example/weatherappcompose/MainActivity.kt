@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
                         LocationSearchScreen(
                             viewModel = viewModel,
                             backStack = backStack,
-                            navigateUp = { navController.navigateUp() }
+                            navigateUp = { navController.navigateUp() },
                         )
                     }
                     composable(route = WeatherAppScreens.FavoriteLocationScreen.name) {

@@ -118,4 +118,8 @@ class ViewModel @Inject constructor(
         }
     }
 
+    fun storePositionAsLocation(location: Location) {
+        updateLocationState(location)
+    }
+
 }
