@@ -9,16 +9,16 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.domain.weather.WeatherInfo
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializer
-import com.google.gson.TypeAdapter
-import com.squareup.moshi.Json
+import com.google.gson.*
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import kotlinx.coroutines.flow.first
+import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 class DataStore(private val context: Context) {
 
@@ -45,14 +45,32 @@ class DataStore(private val context: Context) {
     suspend fun getWeatherInfoString(): WeatherInfo? {
         val json = context.dataStore.data.first()[WEATHER_INFO_KEY]
         Log.d("json","reading: $json")
-        return Gson().fromJson(json, WeatherInfo::class.java)
+        return gson.fromJson(json, WeatherInfo::class.java)
+
+        //return Gson().fromJson(json, WeatherInfo::class.java)
     }
 
     suspend fun saveWeatherInfoString(weatherInfo: WeatherInfo) {
-        val json = Gson().toJson(weatherInfo)
+        val json = gson.toJson(weatherInfo)
+
+        //val json = Gson().toJson(weatherInfo)
         Log.d("json","saving: $json")
         context.dataStore.edit { preferences ->
             preferences[WEATHER_INFO_KEY] = json
+        }
+    }
+
+    val gson = GsonBuilder()
+        .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeTypeAdapter().nullSafe())
+        .create()
+
+    private class LocalDateTimeTypeAdapter: TypeAdapter<LocalDateTime>() {
+        override fun write(out: JsonWriter?, value: LocalDateTime?) {
+            out?.value(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(value))
+        }
+
+        override fun read(input: JsonReader?): LocalDateTime {
+            return LocalDateTime.parse(input?.nextString())
         }
     }
 }

@@ -45,7 +45,7 @@ class ViewModel @Inject constructor(
                     Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT).show()
                     state = state.copy(
 // TODO serialize json (problem with LocalDatTime to get WeatherInfo
-                        weatherInfo = null
+                        weatherInfo = dataStore.getWeatherInfoString()
                     )
                 }
             }
