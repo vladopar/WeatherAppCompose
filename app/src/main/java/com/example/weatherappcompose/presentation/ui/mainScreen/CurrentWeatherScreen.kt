@@ -24,7 +24,8 @@ import kotlinx.coroutines.launch
 fun CurrentWeatherScreen(
     viewModel: ViewModel,
     onSearchIconClick: () -> Unit,
-    onFavoriteIconClick: () -> Unit
+    onFavoriteIconClick: () -> Unit,
+    onDayClick: () -> Unit
 ) {
 
     val scope = rememberCoroutineScope()
@@ -53,7 +54,7 @@ fun CurrentWeatherScreen(
         ) {
             WeatherCard(state = viewModel.state)
             Spacer(modifier = Modifier.height(0.dp))
-            WeatherForecastForToday(state = viewModel.state)
+            WeatherForecastForToday(state = viewModel.state, { onDayClick() })
         }
     }
 }

@@ -72,7 +72,8 @@ class MainActivity : ComponentActivity() {
                                 } else {
                                     InternetConnectionToast(applicationContext)
                                 }
-                            }
+                            },
+                            onDayClick = { navController.navigate(WeatherAppScreens.HourlyForecastScreen.name) }
                         )
                     }
                     composable(route = WeatherAppScreens.LocationSearchScreen.name) {
@@ -93,7 +94,7 @@ class MainActivity : ComponentActivity() {
                         HourlyForecastScreen(
                             viewModel = viewModel,
                             backStack = backStack,
-                            navigateUp = { navController.navigateUp() }
+                            navigateUp = { navController.navigateUp() },
                         )
                     }
                 }

@@ -19,42 +19,23 @@ import androidx.compose.ui.unit.sp
 import com.example.weatherappcompose.R
 import com.example.weatherappcompose.domain.weather.WeatherData
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Composable
-fun WeatherDataForDayOrHour(
+fun DailyForecastItem(
     index: Int,
     weatherData: WeatherData,
     textColor: Color = MaterialTheme.colorScheme.onBackground,
     modifier: Modifier = Modifier
 ) {
-    var dateTimeString = ""
-    var temperatureString = ""
-    val hour = LocalDateTime.now().hour
-
-    when (weatherData.temperature) {
-        null -> {
-            dateTimeString = if (index == 0) {
-                "TODAY"
-            } else {
-                weatherData.dayOfWeek.toString()
-                    .lowercase().replaceFirstChar { it.uppercase() }
-            }
-            temperatureString = "${weatherData.temperatureMin} / ${weatherData.temperatureMax} °C"
-        }
-        else -> {
-            dateTimeString = weatherData.time.format(DateTimeFormatter.ofPattern("HH:mm"))
-            temperatureString = "${weatherData.temperature} °C"
-        }
+    val dateTimeString = when (index) {
+        0 -> "TODAY"
+        else -> weatherData.dayOfWeek.toString()
+            .lowercase().replaceFirstChar { it.uppercase() }
     }
+
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
-            .border(
-                color = Color.Black,
-                width = if (hour == weatherData.time.hour) 4.dp else 0.dp,
-                shape = RoundedCornerShape(8.dp)
-            )
             .shadow(4.dp, RoundedCornerShape(8.dp))
             .width(180.dp)
     ) {
@@ -75,7 +56,7 @@ fun WeatherDataForDayOrHour(
                 modifier = Modifier.size(40.dp)
             )
             Text(
-                text = temperatureString,
+                text = "${weatherData.temperatureMin} / ${weatherData.temperatureMax} °C",
                 fontWeight = FontWeight.Bold,
                 color = textColor,
                 fontSize = 20.sp
