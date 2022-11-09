@@ -1,8 +1,6 @@
 package com.example.weatherappcompose.presentation.ui.mainScreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.example.weatherappcompose.presentation.ViewModel
 import kotlinx.coroutines.launch
@@ -24,9 +21,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun CurrentWeatherScreen(
     viewModel: ViewModel,
-    navController: NavController,
     onSearchIconClick: () -> Unit,
     onFavoriteIconClick: () -> Unit,
+    onClick: (Int) -> Unit
 ) {
 
     val scope = rememberCoroutineScope()
@@ -55,7 +52,7 @@ fun CurrentWeatherScreen(
         ) {
             WeatherCard(state = viewModel.state)
             Spacer(modifier = Modifier.height(0.dp))
-            WeatherForecastForToday(state = viewModel.state, navController)
+            WeatherForecastForToday(state = viewModel.state, onClick = onClick )
         }
     }
 }

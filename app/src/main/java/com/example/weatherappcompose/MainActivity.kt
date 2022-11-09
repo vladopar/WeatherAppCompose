@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 sealed class Screen(val route: String) {
-    object CurrentWeatherScreen: Screen("current_weather_screen")
+    object CurrentWeatherScreen : Screen("current_weather_screen")
     object LocationSearchScreen : Screen("location_search_screen")
     object FavoriteLocationScreen : Screen("favorite_location_screen")
     object HourlyForecastScreen : Screen("hourly_forecast_screen")
@@ -39,7 +39,6 @@ sealed class Screen(val route: String) {
         }
     }
 }
-
 
 
 @AndroidEntryPoint
@@ -82,7 +81,7 @@ class MainActivity : ComponentActivity() {
                                     InternetConnectionToast(applicationContext)
                                 }
                             }
-                        )
+                        ) { navController.navigate(Screen.HourlyForecastScreen.withArgs(it.toString())) }
                     }
                     composable(route = Screen.LocationSearchScreen.route) {
                         LocationSearchScreen(
