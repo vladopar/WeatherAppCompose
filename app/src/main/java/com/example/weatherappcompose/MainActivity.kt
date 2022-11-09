@@ -66,7 +66,6 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screen.CurrentWeatherScreen.route) {
                         CurrentWeatherScreen(
                             viewModel = viewModel,
-                            navController = navController,
                             onSearchIconClick = {
                                 if (isConnected(application.applicationContext)) {
                                     navController.navigate(Screen.LocationSearchScreen.route)
@@ -108,7 +107,6 @@ class MainActivity : ComponentActivity() {
                         HourlyForecastScreen(
                             viewModel = viewModel,
                             backStack = backStack,
-// TODO update with actual value
                             index = it.arguments?.getInt("index"),
                             navigateUp = { navController.navigateUp() }
                         )
