@@ -16,6 +16,7 @@ import com.example.weatherappcompose.data.util.InternetConnectionToast
 import com.example.weatherappcompose.data.util.isConnected
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.favoriteLocationScreen.FavoriteLocationScreen
+import com.example.weatherappcompose.presentation.ui.hourlyForecastScreen.HourlyForecastScreen
 import com.example.weatherappcompose.presentation.ui.locationSearchScreen.LocationSearchScreen
 import com.example.weatherappcompose.presentation.ui.mainScreen.CurrentWeatherScreen
 import com.example.weatherappcompose.presentation.ui.theme.WeatherAppComposeTheme
@@ -25,7 +26,8 @@ import kotlinx.coroutines.launch
 enum class WeatherAppScreens() {
     CurrentWeatherScreen,
     LocationSearchScreen,
-    FavoriteLocationScreen
+    FavoriteLocationScreen,
+    HourlyForecastScreen
 }
 
 @AndroidEntryPoint
@@ -82,6 +84,13 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(route = WeatherAppScreens.FavoriteLocationScreen.name) {
                         FavoriteLocationScreen(
+                            viewModel = viewModel,
+                            backStack = backStack,
+                            navigateUp = { navController.navigateUp() }
+                        )
+                    }
+                    composable(route = WeatherAppScreens.HourlyForecastScreen.name) {
+                        HourlyForecastScreen(
                             viewModel = viewModel,
                             backStack = backStack,
                             navigateUp = { navController.navigateUp() }
