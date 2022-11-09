@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherappcompose.WeatherApp
 import com.example.weatherappcompose.data.local.DataStore
+import com.example.weatherappcompose.data.util.InternetConnectionToast
 import com.example.weatherappcompose.data.util.isConnected
 import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.domain.repositories.LocationRepository
@@ -32,7 +33,6 @@ class ViewModel @Inject constructor(
     private val dataStore = DataStore(application.applicationContext)
 
     val app = application
-
     fun loadWeatherInfo(location: Location) {
         Log.d("json", "loading")
         viewModelScope.launch {
@@ -46,11 +46,7 @@ class ViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     if (!isConnected(context = app.applicationContext)) {
-                        Toast.makeText(
-                            getApplication(),
-                            "No Internet Connection",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        InternetConnectionToast(app.applicationContext)
                     } else {
                         Log.d("json", "${result.message}")
                         Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT)

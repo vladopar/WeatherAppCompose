@@ -3,7 +3,8 @@ package com.example.weatherappcompose.data.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.example.weatherappcompose.WeatherApp
+import android.os.Build
+import android.widget.Toast
 import dagger.hilt.android.internal.Contexts.getApplication
 
 fun isConnected (
@@ -11,7 +12,7 @@ fun isConnected (
 ): Boolean {
     val connectivityManager =
         getApplication(context).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
     val activeNetwork = connectivityManager.activeNetwork ?: return false
     val capabilities =
         connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
@@ -21,7 +22,7 @@ fun isConnected (
         capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
         else -> false
     }
-    /*} else {
+    } else {
         connectivityManager.activeNetworkInfo?.run {
             return when (type) {
                 ConnectivityManager.TYPE_WIFI -> true
@@ -31,5 +32,9 @@ fun isConnected (
             }
         }
     }
-    return false*/
+    return false
+}
+
+fun InternetConnectionToast(context: Context) {
+    Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
 }

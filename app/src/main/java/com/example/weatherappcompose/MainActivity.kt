@@ -1,11 +1,9 @@
 package com.example.weatherappcompose
 
-import android.Manifest
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.weatherappcompose.data.util.InternetConnectionToast
+import com.example.weatherappcompose.data.util.isConnected
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.favoriteLocationScreen.FavoriteLocationScreen
 import com.example.weatherappcompose.presentation.ui.locationSearchScreen.LocationSearchScreen
@@ -57,8 +57,20 @@ class MainActivity : ComponentActivity() {
                     composable(route = WeatherAppScreens.CurrentWeatherScreen.name) {
                         CurrentWeatherScreen(
                             viewModel = viewModel,
-                            onSearchIconClick = { navController.navigate(WeatherAppScreens.LocationSearchScreen.name) },
-                            onFavoriteIconClick = { navController.navigate(WeatherAppScreens.FavoriteLocationScreen.name) }
+                            onSearchIconClick = {
+                                if (isConnected(application.applicationContext)) {
+                                    navController.navigate(WeatherAppScreens.LocationSearchScreen.name)
+                                } else {
+                                    InternetConnectionToast(applicationContext)
+                                }
+                            },
+                            onFavoriteIconClick = {
+                                if (isConnected(application.applicationContext)) {
+                                    navController.navigate(WeatherAppScreens.FavoriteLocationScreen.name)
+                                } else {
+                                    InternetConnectionToast(applicationContext)
+                                }
+                            }
                         )
                     }
                     composable(route = WeatherAppScreens.LocationSearchScreen.name) {
