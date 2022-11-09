@@ -1,17 +1,20 @@
 package com.example.weatherappcompose
 
 import android.os.Bundle
-import android.widget.Toast
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.weatherappcompose.data.util.InternetConnectionToast
 import com.example.weatherappcompose.data.util.isConnected
 import com.example.weatherappcompose.presentation.ViewModel
@@ -90,13 +93,15 @@ class MainActivity : ComponentActivity() {
                             navigateUp = { navController.navigateUp() }
                         )
                     }
-                    composable(route = WeatherAppScreens.HourlyForecastScreen.name) {
+                    composable(route = WeatherAppScreens.HourlyForecastScreen.name,
+                    ) {
+
                         HourlyForecastScreen(
                             viewModel = viewModel,
                             backStack = backStack,
 // TODO update with actual value
                             index = 0,
-                            navigateUp = { navController.navigateUp() },
+                            navigateUp = { navController.navigateUp() }
                         )
                     }
                 }
