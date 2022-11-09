@@ -24,14 +24,22 @@ import java.time.format.DateTimeFormatter
 fun HourlyForecastScreen(
     viewModel: ViewModel,
     backStack: ArrayDeque<NavBackStackEntry>,
+    index: Int,
     navigateUp: () -> Unit
 ) {
-    val weatherDataList = viewModel.state.weatherInfo?.hourlyWeatherData?.get(1) ?: emptyList()
+    val weatherDataList = viewModel.state.weatherInfo?.hourlyWeatherData?.get(index) ?: emptyList()
+
+    val dateTimeString = when (index) {
+        0 -> "TODAY"
+        else -> weatherDataList.first().dayOfWeek.toString()
+            .lowercase().replaceFirstChar { it.uppercase() }
+    }
+
 
     Scaffold(
         topBar = {
             TopBarWithNavigateUp(
-                title = weatherDataList.first().time.format(DateTimeFormatter.ISO_DATE),
+                title = dateTimeString,
                 backStack = backStack,
                 navigateUp = navigateUp
             )

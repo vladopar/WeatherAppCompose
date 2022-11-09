@@ -94,6 +94,8 @@ class MainActivity : ComponentActivity() {
                         HourlyForecastScreen(
                             viewModel = viewModel,
                             backStack = backStack,
+// TODO update with actual value
+                            index = 0,
                             navigateUp = { navController.navigateUp() },
                         )
                     }
