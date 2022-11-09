@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import com.example.weatherappcompose.presentation.ViewModel
 import kotlinx.coroutines.launch
 
@@ -23,9 +24,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun CurrentWeatherScreen(
     viewModel: ViewModel,
+    navController: NavController,
     onSearchIconClick: () -> Unit,
     onFavoriteIconClick: () -> Unit,
-    onDayClick: () -> Unit
 ) {
 
     val scope = rememberCoroutineScope()
@@ -54,7 +55,7 @@ fun CurrentWeatherScreen(
         ) {
             WeatherCard(state = viewModel.state)
             Spacer(modifier = Modifier.height(0.dp))
-            WeatherForecastForToday(state = viewModel.state, { onDayClick() })
+            WeatherForecastForToday(state = viewModel.state, navController)
         }
     }
 }

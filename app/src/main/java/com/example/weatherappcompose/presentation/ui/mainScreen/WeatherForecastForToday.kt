@@ -12,12 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.weatherappcompose.Screen
 import com.example.weatherappcompose.presentation.UiState
 
 @Composable
 fun WeatherForecastForToday(
     state: UiState,
-    onDayClick: () -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()
@@ -47,7 +49,7 @@ fun WeatherForecastForToday(
                             weatherData = weatherData,
                             modifier = Modifier
                                 .height(160.dp)
-                                .clickable { onDayClick() }
+                                .clickable { navController.navigate(Screen.HourlyForecastScreen.withArgs(index.toString())) }
                         )
                     }
                 }

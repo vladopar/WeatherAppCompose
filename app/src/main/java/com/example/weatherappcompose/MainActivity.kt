@@ -67,6 +67,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screen.CurrentWeatherScreen.route) {
                         CurrentWeatherScreen(
                             viewModel = viewModel,
+                            navController = navController,
                             onSearchIconClick = {
                                 if (isConnected(application.applicationContext)) {
                                     navController.navigate(Screen.LocationSearchScreen.route)
@@ -80,8 +81,7 @@ class MainActivity : ComponentActivity() {
                                 } else {
                                     InternetConnectionToast(applicationContext)
                                 }
-                            },
-                            onDayClick = { navController.navigate(Screen.HourlyForecastScreen.withArgs("2")) }
+                            }
                         )
                     }
                     composable(route = Screen.LocationSearchScreen.route) {
