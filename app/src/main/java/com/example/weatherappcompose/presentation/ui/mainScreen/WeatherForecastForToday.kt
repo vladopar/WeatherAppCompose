@@ -18,7 +18,7 @@ import com.example.weatherappcompose.presentation.UiState
 fun WeatherForecastForToday(
     state: UiState,
     modifier: Modifier = Modifier,
-    onClick: (Int) -> Unit
+    onItemClick: (Int) -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -47,7 +47,7 @@ fun WeatherForecastForToday(
                             weatherData = weatherData,
                             modifier = Modifier
                                 .height(160.dp)
-                                .clickable { onClick(index) }
+                                .clickable { onItemClick(index) }
                         )
                     }
                 }

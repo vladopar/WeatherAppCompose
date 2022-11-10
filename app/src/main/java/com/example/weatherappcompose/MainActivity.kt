@@ -79,8 +79,9 @@ class MainActivity : ComponentActivity() {
                                 } else {
                                     InternetConnectionToast(applicationContext)
                                 }
-                            }
-                        ) { navController.navigate(Screen.HourlyForecastScreen.withArgs(it.toString())) }
+                            },
+                            onItemClick = { navController.navigate(Screen.HourlyForecastScreen.withArgs(it.toString())) }
+                        )
                     }
                     composable(route = Screen.LocationSearchScreen.route) {
                         LocationSearchScreen(
