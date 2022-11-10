@@ -35,7 +35,6 @@ fun HourlyForecastItem(
     weatherData: WeatherData
 ) {
     var isExpanded by remember { mutableStateOf(false) }
-
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
@@ -107,7 +106,7 @@ fun HourlyForecastItem(
                     Column(
                         horizontalAlignment = Alignment.Start,
                         modifier = Modifier
-                        .fillMaxWidth(0.5f)
+                            .fillMaxWidth(0.5f)
                     ) {
                         WeatherDataWithIcon(
                             value = weatherData.precipitation.toString(),
@@ -123,8 +122,8 @@ fun HourlyForecastItem(
                     Column(
                         horizontalAlignment = Alignment.Start,
                         modifier = Modifier
-                        .fillMaxWidth()
-                    ){
+                            .fillMaxWidth()
+                    ) {
                         WeatherDataWithIcon(
                             value = weatherData.humidity.toString(),
                             icon = R.drawable.ic_humidity,
