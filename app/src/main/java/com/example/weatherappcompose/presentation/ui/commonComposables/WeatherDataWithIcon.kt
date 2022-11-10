@@ -1,4 +1,4 @@
-package com.example.weatherappcompose.presentation.ui.mainScreen
+package com.example.weatherappcompose.presentation.ui.commonComposables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon

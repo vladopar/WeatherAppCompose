@@ -1,7 +1,6 @@
 package com.example.weatherappcompose.presentation.ui.mainScreen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherappcompose.R
 import com.example.weatherappcompose.domain.weather.WeatherData
-import java.time.LocalDateTime
+import com.example.weatherappcompose.presentation.ui.commonComposables.WeatherDataWithIcon
 
 @Composable
 fun DailyForecastItem(
