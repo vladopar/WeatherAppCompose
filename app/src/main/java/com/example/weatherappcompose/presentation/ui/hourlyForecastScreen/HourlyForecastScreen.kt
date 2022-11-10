@@ -13,11 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
-import com.example.weatherappcompose.domain.weather.WeatherData
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.commonComposables.TopBarWithNavigateUp
-import com.example.weatherappcompose.presentation.ui.favoriteLocationScreen.HourlyForecastItem
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

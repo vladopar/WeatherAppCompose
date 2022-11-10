@@ -1,4 +1,4 @@
-package com.example.weatherappcompose.presentation.ui.favoriteLocationScreen
+package com.example.weatherappcompose.presentation.ui.hourlyForecastScreen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
