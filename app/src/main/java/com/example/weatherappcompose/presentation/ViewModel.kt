@@ -39,7 +39,6 @@ class ViewModel @Inject constructor(
             state = state.copy()
             when (val result = weatherRepository.getWeatherData(location.lat, location.lon)) {
                 is Resource.Success -> {
-                    dataStore.saveWeatherInfoString(result.data!!)
                     state = state.copy(
                         weatherInfo = result.data
                     )
@@ -53,7 +52,7 @@ class ViewModel @Inject constructor(
                             .show()
                     }
                     state = state.copy(
-                        weatherInfo = dataStore.getWeatherInfoString()
+                        weatherInfo = result.data
                     )
                 }
             }

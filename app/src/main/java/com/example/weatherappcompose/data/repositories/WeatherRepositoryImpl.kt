@@ -1,5 +1,7 @@
 package com.example.weatherappcompose.data.repositories
 
+import android.app.Application
+import com.example.weatherappcompose.data.local.DataStore
 import com.example.weatherappcompose.data.mappers.toWeatherInfo
 import com.example.weatherappcompose.data.remote.WeatherApi
 import com.example.weatherappcompose.domain.repositories.WeatherRepository
@@ -11,21 +13,33 @@ import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
     private val api: WeatherApi,
+    application: Application
 ) : WeatherRepository {
 
+    private val dataStore = DataStore(application.applicationContext)
+
+
     override suspend fun getWeatherData(lat: Double, long: Double): Resource<WeatherInfo> {
-         return try {
-            Resource.Success(
+        try {
+            val result = Resource.Success(
                 data = api.getWeatherData(
                     lat = lat,
                     long = long
                 ).toWeatherInfo()
             )
+            result.data?.let { dataStore.saveWeatherInfoString(it) }
+            return result
         } catch (e: HttpException) {
-            Resource.Error(message = "${e.code()}, ${e.message()}")
+            return Resource.Error(
+                message = "${e.code()}, ${e.message()}",
+                data = dataStore.getWeatherInfoString()
+            )
         } catch (e: Exception) {
             e.printStackTrace()
-            Resource.Error(message = e.message ?: "An unknown error occured")
+            return Resource.Error(
+                message = e.message ?: "An unknown error occured",
+                data = dataStore.getWeatherInfoString()
+            )
         }
     }
 }
