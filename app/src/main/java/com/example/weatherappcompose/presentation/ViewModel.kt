@@ -8,9 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherappcompose.WeatherApp
 import com.example.weatherappcompose.data.local.DataStore
-import com.example.weatherappcompose.data.util.InternetConnectionToast
+import com.example.weatherappcompose.data.util.internetConnectionToast
 import com.example.weatherappcompose.data.util.isConnected
 import com.example.weatherappcompose.domain.location.Location
 import com.example.weatherappcompose.domain.repositories.LocationRepository
@@ -45,7 +44,7 @@ class ViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     if (!isConnected(context = app.applicationContext)) {
-                        InternetConnectionToast(app.applicationContext)
+                        internetConnectionToast(app.applicationContext)
                     } else {
                         Log.d("json", "${result.message}")
                         Toast.makeText(getApplication(), "${result.message}", Toast.LENGTH_SHORT)

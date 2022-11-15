@@ -35,6 +35,6 @@ fun isConnected (
     return false
 }
 
-fun InternetConnectionToast(context: Context) {
+fun internetConnectionToast(context: Context) {
     Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
 }

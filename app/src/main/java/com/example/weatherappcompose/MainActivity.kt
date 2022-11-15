@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.weatherappcompose.data.util.InternetConnectionToast
+import com.example.weatherappcompose.data.util.internetConnectionToast
 import com.example.weatherappcompose.data.util.isConnected
 import com.example.weatherappcompose.presentation.ViewModel
 import com.example.weatherappcompose.presentation.ui.favoriteLocationScreen.FavoriteLocationScreen
@@ -70,14 +70,14 @@ class MainActivity : ComponentActivity() {
                                 if (isConnected(application.applicationContext)) {
                                     navController.navigate(Screen.LocationSearchScreen.route)
                                 } else {
-                                    InternetConnectionToast(applicationContext)
+                                    internetConnectionToast(applicationContext)
                                 }
                             },
                             onFavoriteIconClick = {
                                 if (isConnected(application.applicationContext)) {
                                     navController.navigate(Screen.FavoriteLocationScreen.route)
                                 } else {
-                                    InternetConnectionToast(applicationContext)
+                                    internetConnectionToast(applicationContext)
                                 }
                             },
                             onItemClick = { navController.navigate(Screen.HourlyForecastScreen.withArgs(it.toString())) }
