@@ -31,15 +31,19 @@ class ViewModel @Inject constructor(
 
     private val dataStore = DataStore(application.applicationContext)
 
-    val app = application
+    private val app = application
+
     fun loadWeatherInfo(location: Location) {
         Log.d("json", "loading")
         viewModelScope.launch {
-            state = state.copy()
+            state = state.copy(
+                isLoading = true
+            )
             when (val result = weatherRepository.getWeatherData(location.lat, location.lon)) {
                 is Resource.Success -> {
                     state = state.copy(
-                        weatherInfo = result.data
+                        weatherInfo = result.data,
+                        isLoading = false
                     )
                 }
                 is Resource.Error -> {
@@ -51,7 +55,8 @@ class ViewModel @Inject constructor(
                             .show()
                     }
                     state = state.copy(
-                        weatherInfo = result.data
+                        weatherInfo = result.data,
+                        isLoading = false
                     )
                 }
             }
@@ -60,7 +65,6 @@ class ViewModel @Inject constructor(
 
     fun loadListOfLocationData(name: String) {
         viewModelScope.launch {
-            state = state.copy()
             when (val result = locationRepository.getLocationData(name = name.trim())) {
                 is Resource.Success -> {
                     state = state.copy(

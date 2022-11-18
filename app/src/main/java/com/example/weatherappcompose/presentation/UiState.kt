@@ -8,5 +8,5 @@ data class UiState(
     val locationList: List<Location>? = emptyList(),
     val favoriteLocationList: List<Location>? = emptyList(),
     val currentSelectedLocation: Location? = null,
-    var name: String = "",
+    val isLoading: Boolean = false,
 )

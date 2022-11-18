@@ -11,7 +11,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.presentation.ViewModel
 import kotlinx.coroutines.launch
@@ -40,6 +42,7 @@ fun CurrentWeatherScreen(
         topBar = { CurrentWeatherTopBar(onSearchIconClick, onFavoriteIconClick) }
     ) {
         Column(
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.onPrimary)
@@ -49,6 +52,14 @@ fun CurrentWeatherScreen(
                     true
                 )
         ) {
+            if (viewModel.state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .size(100.dp)
+
+                )
+            }
             WeatherCard(state = viewModel.state)
             Spacer(modifier = Modifier.height(0.dp))
             WeatherForecastForToday(state = viewModel.state, onItemClick = onItemClick )
