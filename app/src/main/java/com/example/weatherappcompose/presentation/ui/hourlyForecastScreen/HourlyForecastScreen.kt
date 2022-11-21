@@ -55,9 +55,12 @@ fun HourlyForecastScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(start = 16.dp, end = 16.dp)
             ) {
-                LazyColumn(state = listState) {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                ) {
                     items(weatherDataList) { item ->
                         HourlyForecastItem(weatherData = item)
 

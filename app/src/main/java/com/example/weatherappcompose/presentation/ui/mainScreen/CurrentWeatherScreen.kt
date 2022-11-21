@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.presentation.ViewModel
 import kotlinx.coroutines.launch
@@ -59,10 +58,11 @@ fun CurrentWeatherScreen(
                         .size(100.dp)
 
                 )
+            } else {
+                WeatherCard(state = viewModel.state)
+                Spacer(modifier = Modifier.height(0.dp))
+                WeatherForecastForToday(state = viewModel.state, onItemClick = onItemClick)
             }
-            WeatherCard(state = viewModel.state)
-            Spacer(modifier = Modifier.height(0.dp))
-            WeatherForecastForToday(state = viewModel.state, onItemClick = onItemClick )
         }
     }
 }
