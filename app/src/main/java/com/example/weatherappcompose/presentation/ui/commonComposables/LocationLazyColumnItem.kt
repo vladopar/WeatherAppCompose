@@ -1,15 +1,14 @@
 package com.example.weatherappcompose.presentation.ui.commonComposables
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -23,6 +22,9 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.weatherappcompose.domain.location.Location
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun LocationLazyColumnItem(
@@ -31,7 +33,10 @@ fun LocationLazyColumnItem(
     onClick: () -> Unit,
     onIconClick: () -> Unit
 ) {
-// TODO make animiation after inIconClick
+    var isClicked by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    val size by animateDpAsState(targetValue = if (isClicked) 50.dp else 36.dp)
+    val color by animateColorAsState(targetValue = if (isClicked) Color.Red else MaterialTheme.colorScheme.onSurface)
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -92,15 +97,21 @@ fun LocationLazyColumnItem(
                 Spacer(modifier = Modifier.width(24.dp))
                 IconButton(
                     onClick = {
-                        onIconClick()
+                        scope.launch(Dispatchers.Default) {
+                            isClicked = !isClicked
+                            delay(200L)
+                            isClicked = !isClicked
+                            onIconClick()
+                        }
                     },
                     modifier = Modifier,
                 ) {
                     Icon(
                         imageVector = icon,
                         contentDescription = "Save to favorites",
+                        tint = color,
                         modifier = Modifier
-                            .size(36.dp)
+                            .size(size)
                     )
                 }
             }
