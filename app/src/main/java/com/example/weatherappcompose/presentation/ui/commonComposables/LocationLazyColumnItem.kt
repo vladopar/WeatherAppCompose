@@ -35,7 +35,7 @@ fun LocationLazyColumnItem(
 ) {
     var isClicked by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val size by animateDpAsState(targetValue = if (isClicked) 50.dp else 36.dp)
+    val size by animateDpAsState(targetValue = if (isClicked) 100.dp else 36.dp)
     val color by animateColorAsState(targetValue = if (isClicked) Color.Red else MaterialTheme.colorScheme.onSurface)
 
     Card(
