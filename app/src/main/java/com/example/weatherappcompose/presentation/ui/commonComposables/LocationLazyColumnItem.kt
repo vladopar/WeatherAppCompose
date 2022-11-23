@@ -32,6 +32,7 @@ fun LocationLazyColumnItem(
     onIconClick: () -> Unit
 ) {
 // TODO make animiation after inIconClick
+
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
