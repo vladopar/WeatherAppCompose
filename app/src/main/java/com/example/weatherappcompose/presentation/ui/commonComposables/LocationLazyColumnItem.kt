@@ -22,12 +22,14 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.weatherappcompose.domain.location.Location
+import com.example.weatherappcompose.presentation.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun LocationLazyColumnItem(
+    state: UiState,
     location: Location,
     icon: ImageVector,
     onClick: () -> Unit,
@@ -36,7 +38,8 @@ fun LocationLazyColumnItem(
     var isClicked by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val size by animateDpAsState(targetValue = if (isClicked) 100.dp else 36.dp)
-    val color by animateColorAsState(targetValue = if (isClicked) Color.Red else MaterialTheme.colorScheme.onSurface)
+    val startColor = if (state.favoriteLocationList?.any { it -> it.id == location.id } == true) Color.Red else MaterialTheme.colorScheme.onSurface
+    val color by animateColorAsState(targetValue = if (isClicked) Color.Red else startColor)
 
     Card(
         shape = RoundedCornerShape(10.dp),

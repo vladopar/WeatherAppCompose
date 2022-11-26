@@ -110,6 +110,9 @@ class ViewModel @Inject constructor(
     fun insertFavoriteLocation(location: Location) {
         viewModelScope.launch {
             locationRepository.insertFavoriteLocation(location)
+            state = state.copy(
+                favoriteLocationList = locationRepository.getFavoriteLocations()
+            )
         }
     }
 

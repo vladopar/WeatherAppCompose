@@ -37,6 +37,7 @@ fun LocationSearchScreen(
     }
 
     viewModel.loadListOfLocationData(textFieldState)
+    viewModel.loadFavoriteLocationData()
 
     Scaffold(
         topBar = {
@@ -87,6 +88,7 @@ fun LocationSearchScreen(
                     LazyColumn() {
                         items(it) { item ->
                             LocationLazyColumnItem(
+                                state = viewModel.state,
                                 location = item,
                                 icon = Icons.Filled.Favorite,
                                 onClick = {

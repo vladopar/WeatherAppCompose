@@ -46,6 +46,7 @@ fun FavoriteLocationScreen(
                     LazyColumn() {
                         items(it) { item ->
                             LocationLazyColumnItem(
+                                state = viewModel.state,
                                 location = item,
                                 icon = Icons.Filled.Delete,
                                 onClick = {
