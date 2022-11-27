@@ -23,13 +23,12 @@ import javax.inject.Inject
 class ViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val locationRepository: LocationRepository,
+    private val dataStore: DataStore,
     application: Application
 ) : AndroidViewModel(application) {
 
     var state by mutableStateOf(UiState())
         private set
-
-    private val dataStore = DataStore(application.applicationContext)
 
     private val app = application
 

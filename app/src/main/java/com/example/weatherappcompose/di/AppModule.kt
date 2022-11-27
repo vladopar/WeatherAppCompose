@@ -2,6 +2,7 @@ package com.example.weatherappcompose.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.weatherappcompose.data.local.DataStore
 import com.example.weatherappcompose.data.local.FavoriteLocationRoomDatabase
 import com.example.weatherappcompose.data.remote.LocationApi
 import com.example.weatherappcompose.data.remote.WeatherApi
@@ -72,4 +73,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFavoriteLocationDao(db: FavoriteLocationRoomDatabase) = db.getFavoriteLocationDao()
+
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext app: Context): DataStore {
+        return DataStore(app)
+    }
 }
